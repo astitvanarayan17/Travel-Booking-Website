@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Travel Booking Website</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <header>
+        <nav class="main-nav">
+            <a href="/">Home</a>
+            <a href="/auth/login">Login</a>
+            <a href="/auth/register">Register</a>
+        </nav>
+    </header>
+
+    <div class="booking-container">
+        <h1>Travel Booking Website</h1>
+        <div class="tabs">
+            <button onclick="showTab('flights')">Flights</button>
+            <button onclick="showTab('hotels')">Hotels</button>
+        </div>
+
+        <!-- Flight Booking Section -->
+        <div id="flights" class="tab-content">
+            <form>
+                <label>From:</label>
+                <input type="text" placeholder="Enter city or airport" required><br>
+
+                <label>To:</label>
+                <input type="text" placeholder="Enter city or airport" required><br>
+
+                <label>Departure Date:</label>
+                <input type="date" required><br>
+
+                <label>Class:</label>
+                <select>
+                    <option>Economy</option>
+                    <option>Business</option>
+                </select><br>
+
+                <button type="submit">Search Flights</button>
+            </form>
+        </div>
+        <!-- Hotel Booking Section -->
+        <div id="hotels" class="tab-content" style="display:none;">
+            <form>
+                <label>Location:</label>
+                <input type="text" placeholder="Enter city or location" required><br>
+
+                <label>Check-in Date:</label>
+                <input type="date" required><br>
+
+                <label>Check-out Date:</label>
+                <input type="date" required><br>
+
+                <label>Guests:</label>
+                <input type="number" min="1" value="1" required><br>
+
+                <button type="submit">Search Hotels</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        function showTab(tabName) {
+            document.getElementById('flights').style.display = (tabName === 'flights') ? 'block' : 'none';
+            document.getElementById('hotels').style.display = (tabName === 'hotels') ? 'block' : 'none';
+            // Active tab button styling
+            document.querySelectorAll('.tabs button').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.tabs button[onclick*="' + tabName + '"]').classList.add('active');
+        }
+        // Set default active tab on page load
+        showTab('flights');
+    </script>
+    <footer>
+        <p>&copy; <%= new Date().getFullYear() %> Travel Booking Website. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

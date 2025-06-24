@@ -1,0 +1,197 @@
+/* Reset and base styles */
+body, h1, h2, h3, p, ul, li, a, button, input, select, label {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+    min-height: 100vh;
+    color: #222;
+}
+
+/* Header and Navigation */
+header {
+    background: #0077b6;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+
+.main-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    padding: 20px 0;
+}
+
+.main-nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 10px 22px;
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    position: relative;
+}
+
+.main-nav a:hover,
+.main-nav a:focus {
+    background: #0096c7;
+    color: #e0eafc;
+    box-shadow: 0 2px 8px rgba(0,150,199,0.15);
+}
+
+/* Booking Container */
+.booking-container {
+    background: #fff;
+    margin: 48px auto 0 auto;
+    padding: 40px 44px 32px 44px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+    width: 420px;
+    max-width: 98vw;
+    animation: fadeIn 0.7s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+
+.booking-container h1 {
+    color: #0077b6;
+    margin-bottom: 28px;
+    text-align: center;
+    font-size: 2.2rem;
+    letter-spacing: 1px;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 28px;
+    border-bottom: 2px solid #e0eafc;
+}
+
+.tabs button {
+    background: #0096c7;
+    color: #fff;
+    border: none;
+    padding: 12px 36px;
+    border-radius: 12px 12px 0 0;
+    font-size: 1.05rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    margin-right: 2px;
+    outline: none;
+    border-bottom: 3px solid transparent;
+    box-shadow: 0 2px 8px rgba(0,150,199,0.07);
+}
+
+.tabs button.active,
+.tabs button:focus {
+    background: #fff;
+    color: #0077b6;
+    border-bottom: 3px solid #0077b6;
+    box-shadow: 0 4px 16px rgba(0,119,182,0.10);
+    z-index: 2;
+}
+
+.tabs button:last-child {
+    margin-right: 0;
+}
+
+/* Tab Content */
+.tab-content {
+    padding: 24px 0 0 0;
+    animation: fadeIn 0.5s;
+}
+
+/* Forms */
+form label {
+    display: block;
+    margin-bottom: 10px;
+    color: #333;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+form input[type="text"],
+form input[type="date"],
+form input[type="number"],
+form select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 6px;
+    border: 1.5px solid #bcdff1;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 18px;
+    background: #f7fbff;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+form input:focus,
+form select:focus {
+    border: 1.5px solid #0096c7;
+    box-shadow: 0 2px 8px rgba(0,150,199,0.10);
+    outline: none;
+}
+
+form button[type="submit"] {
+    width: 100%;
+    padding: 14px 0;
+    background: linear-gradient(90deg, #0096c7 60%, #0077b6 100%);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.15rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0,150,199,0.10);
+    margin-top: 8px;
+    letter-spacing: 0.5px;
+}
+
+form button[type="submit"]:hover {
+    background: linear-gradient(90deg, #023e8a 60%, #0096c7 100%);
+    box-shadow: 0 4px 16px rgba(0,119,182,0.15);
+}
+
+/* Footer */
+footer {
+    background: #0077b6;
+    color: #fff;
+    text-align: center;
+    padding: 18px 0;
+    margin-top: 48px;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.04);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .main-nav {
+        flex-direction: column;
+        gap: 12px;
+    }
+    .booking-container {
+        padding: 18px 8px;
+        width: 99vw;
+    }
+    .tabs button {
+        padding: 10px 10px;
+        font-size: 0.98rem;
+    }
+}
