@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Travel Booking Website</title>
+    <title>BookNFly</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -17,12 +17,26 @@
         </nav>
     </header>
 
+    <div class="hero-section">
+       <img src="https://images.pexels.com/photos/346885/pexels-photo-346885.jpeg" alt="BookNFly" class="hero-image">
+
+        <div class="hero-logo">BookNFly</div>
+        <div class="hero-quote">Book. Pack. Fly. <span style="font-size:1rem;">(Explore more. Worry less.)</span></div>
+    </div>
+
     <div class="booking-container">
         <h1>Travel Booking Website</h1>
         <div class="tabs">
             <button onclick="showTab('flights')">Flights</button>
             <button onclick="showTab('hotels')">Hotels</button>
         </div>
+        <div class="inspiration-section">
+    <h2>Get Inspired</h2>
+    <div class="inspiration-images">
+        <img src="https://images.pexels.com/photos/1519088/pexels-photo-1519088.jpeg" alt="Beach Vibes">
+        <img src="https://images.pexels.com/photos/731217/pexels-photo-731217.jpeg" alt="Flight Ready">
+    </div>
+</div>
 
         <!-- Flight Booking Section -->
         <div id="flights" class="tab-content">
@@ -76,7 +90,7 @@
         showTab('flights');
     </script>
     <footer>
-        <p>&copy; <%= new Date().getFullYear() %> Travel Booking Website. All rights reserved.</p>
+        <p>&copy; <%= new Date().getFullYear() %> BookNFly. All rights reserved.</p>
     </footer>
 </body>
 

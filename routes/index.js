@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Destination = require('../models/Destination');
+const ensureAuthenticated = require('../routes/auth.js');
 
 router.get('/', async (req, res) => {
     const destinations = await Destination.find();
