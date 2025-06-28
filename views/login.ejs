@@ -1,5 +1,29 @@
-<form method="POST" action="/auth/login">
-    Username: <input name="username" required><br>
-    Password: <input type="password" name="password" required><br>
-    <button type="submit">Login</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - BookNFly</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="background"></div>
+
+  <div class="auth-container">
+    <h2>Login to BookNFly</h2>
+    <% if (error) { %>
+      <p class="auth-error"><%= error %></p>
+    <% } %>
+    <form method="POST" action="/auth/login" class="auth-form">
+      <label for="username">Username</label>
+      <input name="username" id="username" placeholder="Enter your username" required>
+
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" placeholder="Enter your password" required>
+
+      <button type="submit">Login</button>
+      <p class="auth-link">Don't have an account? <a href="/auth/register">Register here</a></p>
+    </form>
+  </div>
+</body>
+</html>
