@@ -1,81 +1,135 @@
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>BookNFly</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-
-<body>
-    <header>
-        <nav class="main-nav">
-            <a href="/">Home</a>
-            <a href="/auth/login">Login</a>
-            <a href="/auth/register">Register</a>
-        </nav>
-    </header>
+<%- include('partials/header') %>
 
     <section class="hero">
         <img src="https://www.treehugger.com/thmb/5u2-sxLVqD1ARBcD_x0esdPdrvI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-463523885-f1a1ad81230c4fc59d42552090073377.jpg" class="hero-bg" alt="Hero Background">
         <div class="hero-overlay">
-            <h1>BookNFly</h1>
+            <h1>Travel Expo</h1>
             <p>Book. Pack. Fly. <span style="font-size:1rem;">(Explore more. Worry less.)</span></p>
         </div>
     </section>
 
-    <div class="search-wrapper">
-        <div class="search-options">
-            <button class="active">One Way</button>
+    <div class="search-wrapper flight-search-ui">
+        <!-- Top travel options row -->
+        <!-- <div class="travel-options-row">
+            <div class="travel-option active">
+                <img src="https://img.icons8.com/ios-filled/48/2196f3/airplane-take-off.png" alt="Flights">
+                <div>Flights</div>
+            </div>
+            <div class="travel-option">
+                <img src="https://img.icons8.com/ios-filled/48/000000/hotel-room.png" alt="Hotels">
+                <div>Hotels</div>
+            </div>
+            <div class="travel-option">
+                <img src="https://img.icons8.com/ios-filled/48/000000/home.png" alt="Homestays & Villas">
+                <div>Homestays<br>& Villas</div>
+            </div>
+            <div class="travel-option">
+                <img src="https://img.icons8.com/ios-filled/48/000000/beach.png" alt="Holiday Packages">
+                <div>Holiday<br>Packages</div>
+            </div>
+            <div class="travel-option">
+                <img src="https://img.icons8.com/ios-filled/48/000000/train.png" alt="Trains">
+                <div>Trains</div>
+            </div>
+            <div class="travel-option">
+                <img src="https://img.icons8.com/ios-filled/48/000000/bus.png" alt="Buses">
+                <div>Buses</div>
+            </div>
+            <div class="travel-option">
+                <img src="https://img.icons8.com/ios-filled/48/000000/taxi.png" alt="Cabs">
+                <div>Cabs</div>
+            </div>
+            <div class="travel-option">
+                <img src="https://img.icons8.com/ios-filled/48/000000/passport.png" alt="Visa">
+                <div>Visa</div>
+            </div>
+            <div class="travel-option">
+                <img src="https://img.icons8.com/ios-filled/48/000000/currency-exchange.png" alt="Forex Card & Currency">
+                <div>Forex Card<br>& Currency</div>
+            </div>
+            <div class="travel-option">
+                <img src="https://img.icons8.com/ios-filled/48/000000/health-book.png" alt="Travel Insurance">
+                <div>Travel<br>Insurance</div>
+            </div>
+        </div> -->
+        <!-- End travel options row -->
+
+        <div class="search-tabs">
+            <button class="active"><span style="color:#2196f3;font-size:1.2em;">&#9679;</span> One Way</button>
             <button>Round Trip</button>
-            <button>Multicity</button>
+            <button>Multi City</button>
         </div>
-
-        <form class="search-box">
-            <div class="search-field">
-                <label for="from">From</label>
-                <input type="text" id="from" name="from" placeholder="Enter departure city" required>
+        <div class="search-form-row">
+            <div class="search-form-col from">
+                <label>From</label>
+                <div class="search-big-text">Delhi</div>
+                <div class="search-small-text">DEL, Delhi Airport India</div>
             </div>
-            <div class="search-field">
-                <label for="to">To</label>
-                <input type="text" id="to" name="to" placeholder="Enter destination city" required>
+            <div class="search-form-col swap">
+                <button class="swap-btn">&#8646;</button>
             </div>
-            <div class="search-field">
-                <label for="departure">Departure Date</label>
-                <input type="date" id="departure" name="departure" required>
+            <div class="search-form-col to">
+                <label>To</label>
+                <div class="search-big-text">Bengaluru</div>
+                <div class="search-small-text">BLR, Bengaluru International Airport ...</div>
             </div>
-            <div class="search-field">
-                <label for="return">Return Date</label>
-                <input type="date" id="return" name="return">
+            <div class="search-form-col date">
+                <label>Departure</label>
+                <div class="search-big-text">2 <span class="search-month">Jul'25</span></div>
+                <div class="search-small-text">Wednesday</div>
             </div>
-            <div class="search-field">
-                <label for="travelers">Travelers & Class</label>
-                <input type="number" id="travelers" name="travelers" min="1" value="1"> 
-                <select name="class">
-                    <option>Economy</option>
-                    <option>Business</option>
-                    <option>First</option>
-                </select>
+            <div class="search-form-col date">
+                <label>Return</label>
+                <div class="search-big-text search-grey">Tap to add a return<br>date for bigger discounts</div>
             </div>
-            <button type="submit" class="search-btn">Search</button>
-        </form>
-
-        <div class="special-fares">
-            <strong>Special Fares (Optional):</strong>
-            <label><input type="checkbox"> Defence Forces</label>
-            <label><input type="checkbox"> Students</label>
-            <label><input type="checkbox"> Senior Citizens</label>
-            <label><input type="checkbox"> Doctors/Nurses</label>
+            <div class="search-form-col travelers">
+                <label>Travellers & Class</label>
+                <div class="search-big-text">1 Traveller</div>
+                <div class="search-small-text">Economy/Premium Economy</div>
+            </div>
+        </div>
+        <div class="special-fare-row">
+            <span class="special-fare-label">Select a special fare</span>
+            <span class="extra-savings">EXTRA SAVINGS</span>
+            <button class="fare-btn active">Regular<br><span>Regular fares</span></button>
+            <button class="fare-btn">Student<br><span>Extra discounts/baggage</span></button>
+            <button class="fare-btn">Senior Citizen<br><span>Up to ₹ 600 off</span></button>
+            <button class="fare-btn">Armed Forces<br><span>Up to ₹ 600 off</span></button>
+            <button class="fare-btn">Doctor and Nurses<br><span>Up to ₹ 600 off</span></button>
+            <span class="flight-tracker">✈️ Flight Tracker <span class="new-badge">new</span></span>
+        </div>
+        <div class="flexifly-row">
+            <label><input type="checkbox"> <b>Add FlexiFly</b> 100% refund on cancellation or Zero date change charges <a href="#">View Details</a></label>
+        </div>
+        <div class="search-btn-row">
+            <button class="search-btn-main">SEARCH</button>
         </div>
     </div>
 
-    <div class="inspiration-section">
-        <h2>Get Inspired</h2>
-        <div class="inspiration-images">
-            <img src="https://images.pexels.com/photos/1519088/pexels-photo-1519088.jpeg" alt="Beach Vibes">
-            <img src="https://images.pexels.com/photos/731217/pexels-photo-731217.jpeg" alt="Flight Ready">
+    <!-- Replace the Get Inspired section with the Wonders of India cards -->
+    <div class="inspiration-section wonders-section">
+        <h2>Unlock Lesser-Known Wonders of India</h2>
+        <div class="wonders-cards-row">
+            <div class="wonders-card">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Shimla's Best Kept Secret">
+                <div class="wonders-card-title">Shimla's Best Kept Secret</div>
+            </div>
+            <div class="wonders-card">
+                <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Tamil Nadu's Charming Hill Town">
+                <div class="wonders-card-title">Tamil Nadu's Charming Hill Town</div>
+            </div>
+            <div class="wonders-card">
+                <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=400&q=80" alt="Picturesque Gateway to Himalayas">
+                <div class="wonders-card-title">Picturesque Gateway to Himalayas</div>
+            </div>
+            <div class="wonders-card">
+                <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="Quaint Little Hill Station in Gujarat">
+                <div class="wonders-card-title">Quaint Little Hill Station in Gujarat</div>
+            </div>
+            <div class="wonders-card">
+                <img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=400&q=80" alt="A pleasant summer retreat and a snowy winter wonderland!">
+                <div class="wonders-card-title">A pleasant summer retreat and a snowy winter wonderland!</div>
+            </div>
         </div>
     </div>
 

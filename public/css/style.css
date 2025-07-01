@@ -28,6 +28,92 @@ header {
   color: #0e9f6e;
 }
 
+.main-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    padding: 0 40px;
+    min-height: 70px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    margin-right: 32px;
+}
+
+.nav-logo img {
+    height: 38px;
+    
+    width: auto;
+    display: block;
+    object-fit: contain;
+    border-radius: 6px;
+}
+
+.nav-dashboard {
+    display: flex;
+    align-items: center;
+}
+
+.nav-dashboard a {
+    text-decoration: none;
+    color: #222;
+    font-weight: 500;
+    font-size: 1.08rem;
+    padding: 8px 18px;
+    border-radius: 8px;
+    transition: background 0.18s, color 0.18s;
+}
+
+.nav-dashboard a:hover {
+    background: #f3f6f8;
+    color: #008080;
+}
+
+.nav-auth {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    /* Pushes nav-auth to the right */
+    margin-left: auto;
+}
+
+.signup-btn {
+    border: 1.5px solid #bfcad6;
+    background: #fff;
+    color: #222;
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 8px 18px;
+    transition: background 0.18s, color 0.18s, border 0.18s;
+    text-decoration: none;
+}
+
+.signup-btn:hover {
+    background: #f3f6f8;
+    border-color: #008080;
+    color: #008080;
+}
+
+.login-btn {
+    background: #0a223d;
+    color: #fff;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    padding: 8px 18px;
+    text-decoration: none;
+    transition: background 0.18s, color 0.18s;
+}
+
+.login-btn:hover {
+    background: #1769aa;
+    color: #fff;
+}
+
 .main-nav a {
   text-decoration: none;
   color: #444;
@@ -38,6 +124,67 @@ header {
 .main-nav a:hover {
   color: #0e9f6e;
 }
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.nav-links a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    color: #222;
+    font-weight: 500;
+    font-size: 1.08rem;
+    padding: 8px 18px;
+    border-radius: 8px;
+    transition: background 0.18s, color 0.18s;
+    border: none;
+    background: none;
+}
+
+.nav-links a:hover {
+    background: #f3f6f8;
+    color: #008080;
+}
+
+.nav-links a:last-child {
+    background: #0a223d;
+    color: #fff;
+    border-radius: 8px;
+    margin-left: 8px;
+    font-weight: 600;
+    border: none;
+    transition: background 0.18s, color 0.18s;
+    -webkit-transition: background 0.18s, color 0.18s;
+    -moz-transition: background 0.18s, color 0.18s;
+    -ms-transition: background 0.18s, color 0.18s;
+    -o-transition: background 0.18s, color 0.18s;
+}
+
+.nav-links a:nth-last-child(2) {
+    border: 1.5px solid #bfcad6;
+    background: #fff;
+    color: #222;
+    border-radius: 8px;
+    margin-left: 8px;
+    font-weight: 600;
+    transition: background 0.18s, color 0.18s, border 0.18s;
+}
+/* 
+.nav-links a:nth-last-child(2):hover {
+    background: #f3f6f8;
+    border-color: #008080;
+    color: #008080;
+}
+
+.nav-links a:last-child:hover {
+    background: #1769aa;
+    color: #fff;
+} */
 
 .hero {
   position: relative;
@@ -174,6 +321,83 @@ header {
   margin-right: 6px;
 }
 
+/* Wonders of India Section */
+.wonders-section {
+  max-width: 1100px;
+  margin: 50px auto 0 auto;
+  text-align: left;
+}
+
+.wonders-section h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 28px;
+  color: #222;
+  letter-spacing: 0.5px;
+}
+
+.wonders-cards-row {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.wonders-card {
+  min-width: 240px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.wonders-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.13);
+}
+
+.wonders-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 16px 16px 0 0;
+  display: block;
+}
+
+.wonders-card-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 18px 16px 12px 16px;
+  color: #fff;
+  font-size: 1.18rem;
+  font-weight: 700;
+  text-shadow: 0 2px 8px #000, 0 1px 2px #222;
+  background: linear-gradient(transparent 40%, rgba(0,0,0,0.7) 100%);
+  border-radius: 0 0 16px 16px;
+  line-height: 1.3;
+}
+
+@media (max-width: 900px) {
+  .wonders-cards-row {
+    gap: 14px;
+  }
+  .wonders-card {
+    min-width: 180px;
+  }
+  .wonders-card img {
+    height: 120px;
+  }
+  .wonders-card-title {
+    font-size: 1rem;
+    padding: 12px 8px 8px 8px;
+  }
+}
+
 .inspiration-section {
   max-width: 1100px;
   margin: 50px auto;
@@ -217,7 +441,6 @@ body, html {
   overflow-y: auto;      /* Allow vertical scroll */
   scroll-behavior: smooth; /* Optional: smooth scrolling effect */
 }
-
 
 .background {
   position: fixed;
@@ -307,4 +530,330 @@ body, html {
 
 .auth-link a:hover {
   color: #ff9a60;
+}
+
+/* Add to your style.css for the new search UI */
+.flight-search-ui {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 28px 28px 18px 28px;
+    max-width: 1200px;
+    margin: -80px auto 40px auto;
+    position: relative;
+}
+.search-tabs {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 18px;
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+.search-tabs button {
+    background: none;
+    border: none;
+    color: #222;
+    padding: 8px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+.search-tabs button.active, .search-tabs button:hover {
+    background: #eaf3ff;
+    color: #2196f3;
+}
+.search-form-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+    background: #f8fafd;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 18px;
+    border: 1px solid #e3e6ea;
+}
+.search-form-col {
+    flex: 1;
+    padding: 22px 18px 18px 18px;
+    min-width: 140px;
+    position: relative;
+}
+.search-form-col.swap {
+    flex: 0 0 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    padding: 0;
+}
+.swap-btn {
+    background: #fff;
+    border: 1px solid #e3e6ea;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    transition: background 0.2s;
+}
+.swap-btn:hover {
+    background: #eaf3ff;
+}
+.search-form-col label {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+}
+.search-big-text {
+    font-size: 2.1rem;
+    font-weight: 700;
+    color: #222;
+    line-height: 1.1;
+}
+.search-small-text {
+    font-size: 1rem;
+    color: #666;
+    margin-top: 2px;
+}
+.search-month {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #2196f3;
+}
+.search-grey {
+    color: #bbb;
+    font-size: 1rem;
+    font-weight: 500;
+}
+.special-fare-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 18px 0 10px 0;
+    flex-wrap: wrap;
+}
+.special-fare-label {
+    font-weight: 700;
+    color: #222;
+    margin-right: 8px;
+    font-size: 1.1rem;
+}
+.extra-savings {
+    background: #1ec28b;
+    color: #fff;
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 2px 14px;
+    font-size: 1rem;
+    margin-right: 10px;
+    letter-spacing: 1px;
+}
+.fare-btn {
+    background: #fff;
+    border: 1.5px solid #b6d6f6;
+    border-radius: 12px;
+    padding: 10px 22px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2196f3;
+    margin-right: 6px;
+    cursor: pointer;
+    transition: border 0.2s, background 0.2s;
+    min-width: 120px;
+    text-align: left;
+    line-height: 1.1;
+}
+.fare-btn span {
+    display: block;
+    font-size: 0.95rem;
+    color: #888;
+    font-weight: 400;
+}
+.fare-btn.active, .fare-btn:hover {
+    border: 2px solid #2196f3;
+    background: #eaf3ff;
+}
+.flight-tracker {
+    margin-left: auto;
+    background: #f5f7fa;
+    border-radius: 8px;
+    padding: 7px 16px;
+    font-size: 1.05rem;
+    color: #2196f3;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.new-badge {
+    background: #e14eca;
+    color: #fff;
+    font-size: 0.8em;
+    border-radius: 8px;
+    padding: 2px 8px;
+    margin-left: 4px;
+    font-weight: 700;
+}
+.flexifly-row {
+    margin: 18px 0 0 0;
+    font-size: 1.05rem;
+    color: #222;
+}
+.flexifly-row input[type="checkbox"] {
+    accent-color: #2196f3;
+    margin-right: 8px;
+}
+.flexifly-row a {
+    color: #2196f3;
+    text-decoration: underline;
+    margin-left: 8px;
+    font-size: 0.98em;
+}
+.search-btn-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+}
+.search-btn-main {
+    background: #2196f3;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 32px;
+    padding: 12px 60px;
+    box-shadow: 0 4px 16px rgba(33,150,243,0.08);
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 1px;
+}
+.search-btn-main:hover {
+    background: #1769aa;
+}
+@media (max-width: 1100px) {
+    .flight-search-ui {
+        padding: 18px 4vw 12px 4vw;
+    }
+    .search-form-row {
+        flex-wrap: wrap;
+    }
+    .search-form-col {
+        min-width: 180px;
+        padding: 18px 8px 12px 8px;
+    }
+}
+@media (max-width: 900px) {
+    .main-nav {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0 10px;
+        min-height: 60px;
+        gap: 8px;
+    }
+    .nav-logo {
+        margin: 8px 0;
+        justify-content: flex-start;
+    }
+    .nav-logo img {
+        height: 30px;
+    }
+    .nav-auth, .nav-dashboard {
+        gap: 10px;
+        font-size: 0.98rem;
+        justify-content: flex-start;
+    }
+}
+@media (max-width: 700px) {
+    .flight-search-ui {
+        margin: 0;
+        padding: 10px 2vw 8px 2vw;
+    }
+    .search-form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    .search-form-col {
+        min-width: 100px;
+        padding: 12px 4px 8px 4px;
+    }
+    .search-big-text {
+        font-size: 1.3rem;
+    }
+    .search-btn-main {
+        font-size: 1.2rem;
+        padding: 10px 24px;
+    }
+}
+
+/* Add to your style.css for the travel options row */
+.travel-options-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 36px;
+    background: #fff;
+    border-radius: 18px 18px 0 0;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    padding: 18px 0 0 0;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 2;
+}
+.travel-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.05rem;
+    color: #222;
+    font-weight: 500;
+    cursor: pointer;
+    min-width: 80px;
+    transition: color 0.2s;
+    padding-bottom: 6px;
+    border-bottom: 3px solid transparent;
+}
+.travel-option img {
+    width: 42px;
+    height: 42px;
+    margin-bottom: 4px;
+    filter: grayscale(1);
+    transition: filter 0.2s;
+}
+.travel-option.active,
+.travel-option:hover {
+    color: #2196f3;
+    border-bottom: 3px solid #2196f3;
+}
+.travel-option.active img,
+.travel-option:hover img {
+    filter: none;
+}
+@media (max-width: 1100px) {
+    .travel-options-row {
+        gap: 18px;
+        padding: 10px 0 0 0;
+    }
+    .travel-option img {
+        width: 32px;
+        height: 32px;
+    }
+    .travel-option {
+        font-size: 0.95rem;
+        min-width: 60px;
+    }
+}
+@media (max-width: 700px) {
+    .travel-options-row {
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+    .travel-option {
+        min-width: 48px;
+        font-size: 0.85rem;
+        padding-bottom: 2px;
+    }
 }
