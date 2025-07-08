@@ -8,103 +8,90 @@
         </div>
     </section>
 
-    <div class="search-wrapper flight-search-ui">
-        <!-- Top travel options row -->
-        <!-- <div class="travel-options-row">
-            <div class="travel-option active">
-                <img src="https://img.icons8.com/ios-filled/48/2196f3/airplane-take-off.png" alt="Flights">
-                <div>Flights</div>
-            </div>
-            <div class="travel-option">
-                <img src="https://img.icons8.com/ios-filled/48/000000/hotel-room.png" alt="Hotels">
-                <div>Hotels</div>
-            </div>
-            <div class="travel-option">
-                <img src="https://img.icons8.com/ios-filled/48/000000/home.png" alt="Homestays & Villas">
-                <div>Homestays<br>& Villas</div>
-            </div>
-            <div class="travel-option">
-                <img src="https://img.icons8.com/ios-filled/48/000000/beach.png" alt="Holiday Packages">
-                <div>Holiday<br>Packages</div>
-            </div>
-            <div class="travel-option">
-                <img src="https://img.icons8.com/ios-filled/48/000000/train.png" alt="Trains">
-                <div>Trains</div>
-            </div>
-            <div class="travel-option">
-                <img src="https://img.icons8.com/ios-filled/48/000000/bus.png" alt="Buses">
-                <div>Buses</div>
-            </div>
-            <div class="travel-option">
-                <img src="https://img.icons8.com/ios-filled/48/000000/taxi.png" alt="Cabs">
-                <div>Cabs</div>
-            </div>
-            <div class="travel-option">
-                <img src="https://img.icons8.com/ios-filled/48/000000/passport.png" alt="Visa">
-                <div>Visa</div>
-            </div>
-            <div class="travel-option">
-                <img src="https://img.icons8.com/ios-filled/48/000000/currency-exchange.png" alt="Forex Card & Currency">
-                <div>Forex Card<br>& Currency</div>
-            </div>
-            <div class="travel-option">
-                <img src="https://img.icons8.com/ios-filled/48/000000/health-book.png" alt="Travel Insurance">
-                <div>Travel<br>Insurance</div>
-            </div>
-        </div> -->
-        <!-- End travel options row -->
-
+    <form action="/flights/book" method="POST" class="search-wrapper flight-search-ui">
         <div class="search-tabs">
-            <button class="active"><span style="color:#2196f3;font-size:1.2em;">&#9679;</span> One Way</button>
-            <button>Round Trip</button>
-            <button>Multi City</button>
+            <button class="active" type="button"><span style="color:#2196f3;font-size:1.2em;">&#9679;</span> One Way</button>
+            <button type="button">Round Trip</button>
+            <button type="button">Multi City</button>
         </div>
         <div class="search-form-row">
             <div class="search-form-col from">
                 <label>From</label>
-                <div class="search-big-text">Delhi</div>
+                <div class="search-big-text">
+                    <input type="text" name="from" value="Delhi" required style="border:none;background:transparent;font-size:inherit;width:100%;">
+                </div>
                 <div class="search-small-text">DEL, Delhi Airport India</div>
             </div>
             <div class="search-form-col swap">
-                <button class="swap-btn">&#8646;</button>
+                <button class="swap-btn" type="button">&#8646;</button>
             </div>
             <div class="search-form-col to">
                 <label>To</label>
-                <div class="search-big-text">Bengaluru</div>
+                <div class="search-big-text">
+                    <input type="text" name="to" value="Bengaluru" required style="border:none;background:transparent;font-size:inherit;width:100%;">
+                </div>
                 <div class="search-small-text">BLR, Bengaluru International Airport ...</div>
             </div>
             <div class="search-form-col date">
                 <label>Departure</label>
-                <div class="search-big-text">2 <span class="search-month">Jul'25</span></div>
+                <div class="search-big-text">
+                    <input type="date" name="departureDate" required style="border:none;background:transparent;font-size:inherit;">
+                </div>
                 <div class="search-small-text">Wednesday</div>
             </div>
             <div class="search-form-col date">
                 <label>Return</label>
-                <div class="search-big-text search-grey">Tap to add a return<br>date for bigger discounts</div>
+                <div class="search-big-text search-grey">
+                    <input type="date" name="returnDate" style="border:none;background:transparent;font-size:inherit;">
+                </div>
             </div>
             <div class="search-form-col travelers">
                 <label>Travellers & Class</label>
-                <div class="search-big-text">1 Traveller</div>
-                <div class="search-small-text">Economy/Premium Economy</div>
+                <div class="search-big-text">
+                    <input type="number" name="travellers" min="1" value="1" required style="border:none;background:transparent;font-size:inherit;width:60px;">
+                </div>
+                <div class="search-small-text">
+                    <select name="travelClass" style="border:none;background:transparent;font-size:inherit;">
+                        <option value="Economy">Economy/Premium Economy</option>
+                        <option value="Business">Business</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Car Booking Column -->
+            <div class="search-form-col car">
+                <label>Car</label>
+                <div class="search-big-text">
+                    <input type="text" name="carLocation" placeholder="Pick-up location" style="border:none;background:transparent;font-size:inherit;width:100%;">
+                </div>
+                <div class="search-small-text">Optional</div>
+            </div>
+
+            <!-- Train Booking Column -->
+            <div class="search-form-col train">
+                <label>Train</label>
+                <div class="search-big-text">
+                    <input type="text" name="trainRoute" placeholder="From - To" style="border:none;background:transparent;font-size:inherit;width:100%;">
+                </div>
+                <div class="search-small-text">Optional</div>
             </div>
         </div>
         <div class="special-fare-row">
             <span class="special-fare-label">Select a special fare</span>
             <span class="extra-savings">EXTRA SAVINGS</span>
-            <button class="fare-btn active">Regular<br><span>Regular fares</span></button>
-            <button class="fare-btn">Student<br><span>Extra discounts/baggage</span></button>
-            <button class="fare-btn">Senior Citizen<br><span>Up to ₹ 600 off</span></button>
-            <button class="fare-btn">Armed Forces<br><span>Up to ₹ 600 off</span></button>
-            <button class="fare-btn">Doctor and Nurses<br><span>Up to ₹ 600 off</span></button>
+            <button class="fare-btn active" type="button">Regular<br><span>Regular fares</span></button>
+            <button class="fare-btn" type="button">Student<br><span>Extra discounts/baggage</span></button>
+            <button class="fare-btn" type="button">Senior Citizen<br><span>Up to ₹ 600 off</span></button>
+            <button class="fare-btn" type="button">Armed Forces<br><span>Up to ₹ 600 off</span></button>
+            <button class="fare-btn" type="button">Doctor and Nurses<br><span>Up to ₹ 600 off</span></button>
             <span class="flight-tracker">✈️ Flight Tracker <span class="new-badge">new</span></span>
         </div>
         <div class="flexifly-row">
-            <label><input type="checkbox"> <b>Add FlexiFly</b> 100% refund on cancellation or Zero date change charges <a href="#">View Details</a></label>
+            <label><input type="checkbox" name="flexifly"> <b>Add FlexiFly</b> 100% refund on cancellation or Zero date change charges <a href="#">View Details</a></label>
         </div>
         <div class="search-btn-row">
-            <button class="search-btn-main">SEARCH</button>
+            <button class="search-btn-main" type="submit">SEARCH</button>
         </div>
-    </div>
+    </form>
 
     <!-- Replace the Get Inspired section with the Wonders of India cards -->
     <div class="inspiration-section wonders-section">
