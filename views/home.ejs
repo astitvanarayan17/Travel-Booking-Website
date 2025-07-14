@@ -8,88 +8,39 @@
         </div>
     </section>
 
-    <form action="/flights/book" method="POST" class="search-wrapper flight-search-ui">
-        <div class="search-tabs">
-            <button class="active" type="button"><span style="color:#2196f3;font-size:1.2em;">&#9679;</span> One Way</button>
-            <button type="button">Round Trip</button>
-            <button type="button">Multi City</button>
-        </div>
-        <div class="search-form-row">
-            <div class="search-form-col from">
-                <label>From</label>
-                <div class="search-big-text">
-                    <input type="text" name="from" value="Delhi" required style="border:none;background:transparent;font-size:inherit;width:100%;">
-                </div>
-                <div class="search-small-text">DEL, Delhi Airport India</div>
+    <form action="/flights/book" method="POST" class="search-wrapper modern-flight-form">
+        <div class="modern-form-row">
+            <div class="modern-form-col">
+                <label for="from">From</label>
+                <input type="text" id="from" name="from" placeholder="City or Airport" required>
             </div>
-            <div class="search-form-col swap">
-                <button class="swap-btn" type="button">&#8646;</button>
+            <div class="modern-form-col">
+                <label for="to">To</label>
+                <input type="text" id="to" name="to" placeholder="City or Airport" required>
             </div>
-            <div class="search-form-col to">
-                <label>To</label>
-                <div class="search-big-text">
-                    <input type="text" name="to" value="Bengaluru" required style="border:none;background:transparent;font-size:inherit;width:100%;">
-                </div>
-                <div class="search-small-text">BLR, Bengaluru International Airport ...</div>
+            <div class="modern-form-col">
+                <label for="departureDate">Departure</label>
+                <input type="date" id="departureDate" name="departureDate" required>
             </div>
-            <div class="search-form-col date">
-                <label>Departure</label>
-                <div class="search-big-text">
-                    <input type="date" name="departureDate" required style="border:none;background:transparent;font-size:inherit;">
-                </div>
-                <div class="search-small-text">Wednesday</div>
+            <div class="modern-form-col">
+                <label for="returnDate">Return</label>
+                <input type="date" id="returnDate" name="returnDate">
             </div>
-            <div class="search-form-col date">
-                <label>Return</label>
-                <div class="search-big-text search-grey">
-                    <input type="date" name="returnDate" style="border:none;background:transparent;font-size:inherit;">
-                </div>
+            <div class="modern-form-col">
+                <label for="travellers">Travellers</label>
+                <input type="number" id="travellers" name="travellers" min="1" value="1" required>
             </div>
-            <div class="search-form-col travelers">
-                <label>Travellers & Class</label>
-                <div class="search-big-text">
-                    <input type="number" name="travellers" min="1" value="1" required style="border:none;background:transparent;font-size:inherit;width:60px;">
-                </div>
-                <div class="search-small-text">
-                    <select name="travelClass" style="border:none;background:transparent;font-size:inherit;">
-                        <option value="Economy">Economy/Premium Economy</option>
-                        <option value="Business">Business</option>
-                    </select>
-                </div>
-            </div>
-            <!-- Car Booking Column -->
-            <div class="search-form-col car">
-                <label>Car</label>
-                <div class="search-big-text">
-                    <input type="text" name="carLocation" placeholder="Pick-up location" style="border:none;background:transparent;font-size:inherit;width:100%;">
-                </div>
-                <div class="search-small-text">Optional</div>
-            </div>
-
-            <!-- Train Booking Column -->
-            <div class="search-form-col train">
-                <label>Train</label>
-                <div class="search-big-text">
-                    <input type="text" name="trainRoute" placeholder="From - To" style="border:none;background:transparent;font-size:inherit;width:100%;">
-                </div>
-                <div class="search-small-text">Optional</div>
+            <div class="modern-form-col">
+                <label for="travelClass">Class</label>
+                <select id="travelClass" name="travelClass">
+                    <option value="Economy">Economy</option>
+                    <option value="Premium">Premium</option>
+                    <option value="Business">Business</option>
+                </select>
             </div>
         </div>
-        <div class="special-fare-row">
-            <span class="special-fare-label">Select a special fare</span>
-            <span class="extra-savings">EXTRA SAVINGS</span>
-            <button class="fare-btn active" type="button">Regular<br><span>Regular fares</span></button>
-            <button class="fare-btn" type="button">Student<br><span>Extra discounts/baggage</span></button>
-            <button class="fare-btn" type="button">Senior Citizen<br><span>Up to ₹ 600 off</span></button>
-            <button class="fare-btn" type="button">Armed Forces<br><span>Up to ₹ 600 off</span></button>
-            <button class="fare-btn" type="button">Doctor and Nurses<br><span>Up to ₹ 600 off</span></button>
-            <span class="flight-tracker">✈️ Flight Tracker <span class="new-badge">new</span></span>
-        </div>
-        <div class="flexifly-row">
-            <label><input type="checkbox" name="flexifly"> <b>Add FlexiFly</b> 100% refund on cancellation or Zero date change charges <a href="#">View Details</a></label>
-        </div>
-        <div class="search-btn-row">
-            <button class="search-btn-main" type="submit">SEARCH</button>
+        <div class="modern-form-actions">
+            <button type="submit" class="modern-search-btn">Search Flights</button>
         </div>
     </form>
 

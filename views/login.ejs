@@ -7,23 +7,24 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <div class="background"></div>
-
-  <div class="auth-container">
-    <h2>Login to TravelExpo</h2>
-    <% if (error) { %>
-      <p class="auth-error"><%= error %></p>
-    <% } %>
-    <form method="POST" action="/auth/login" class="auth-form">
-      <label for="username">Username</label>
-      <input name="username" id="username" placeholder="Enter your username" required>
-
-      <label for="password">Password</label>
-      <input type="password" name="password" id="password" placeholder="Enter your password" required>
-
-      <button type="submit">Login</button>
-      <p class="auth-link">Don't have an account? <a href="/auth/register">Register here</a></p>
-    </form>
+  <div class="login-split-container">
+    <div class="login-illustration">
+      <img src="https://img.freepik.com/free-vector/login-concept-illustration_114360-757.jpg?w=740" alt="Login Illustration">
+    </div>
+    <div class="auth-container">
+      <h2>Hello,<br>Welcome Back</h2>
+      <% if (error) { %>
+        <p class="auth-error"><%= error %></p>
+      <% } %>
+      <form method="POST" action="/auth/login" class="auth-form">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" placeholder="Enter your username" required>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="Enter your password" required>
+        <button type="submit">Login</button>
+        <p class="auth-link">Don't have an account? <a href="/auth/register">Register here</a></p>
+      </form>
+    </div>
   </div>
 </body>
 </html>
