@@ -1,32 +1,19 @@
-const express = require('express');
-const router = express.Router();
-const bcrypt = require('bcryptjs');
-const User = require('../models/User');
+const express = require("express"),
+    router = express.Router(),
+    passport = require("passport");
 
-router.get('/register', (req, res) => res.render('register', { error: null }));
+const catchAsync = require("../utils/catchAsync");
+const auth = require("../controllers/auth");
 
-router.post('/register', async (req, res) => {
-    const { username, password } = req.body;
-    const existingUser = await User.findOne({ username });
-    if (existingUser) {
-        return res.render('register', { error: 'Username already exists' });
-    }
-    const hashed = await bcrypt.hash(password, 10);
-    await new User({ username, password: hashed }).save();
-    res.redirect('/auth/login');
-});
+router.route("/register")
+    .get(auth.renderRegister)
+    .post(catchAsync(auth.register));
 
-router.get('/login', (req, res) => res.render('login', { error: null }));
+router.route("/login")
+    .get(auth.renderLogin)
+    .post(passport.authenticate("local", { failureFlash: true, failureRedirect: "/login" }), auth.login);
 
-router.post('/login', async (req, res) => {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username });
-    if (user && await bcrypt.compare(password, user.password)) {
-        req.session.userId = user._id;
-        res.redirect('/');
-    } else {
-        res.render('login', { error: 'Invalid username or password' });
-    }
-});
+router.get("/logout", auth.logout);
+
 
 module.exports = router;
