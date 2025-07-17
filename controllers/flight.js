@@ -1,7 +1,6 @@
 const _ = require("lodash");
 
-const BookingDetail = require("../models/bookingDetail"),
-    Contact = require("../models/contact");
+const BookingDetail = require("../models/bookingDetail");
 
 const airportsList = require("../utils/airportsList"),
     { generateDetails, getCity, sorting } = require("../utils/helperFunctions");
@@ -88,15 +87,4 @@ module.exports.deleteBookings = async (req, res) => {
     await BookingDetail.findByIdAndDelete(id);
     req.flash("success", "Your Booking has been Cancelled!");
     res.redirect("/bookings");
-}
-
-module.exports.renderContactForm = (req, res) => {
-    res.render("flights/contact");
-}
-
-module.exports.saveContactDetails = async (req, res) => {
-    const contact = new Contact(req.body);
-    await contact.save();
-    req.flash("success", "Your message have been sent!");
-    res.redirect("/contact");
 }
