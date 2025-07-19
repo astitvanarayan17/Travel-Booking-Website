@@ -35,9 +35,4 @@ router.route("/cancel/:id")
 router.route("/cancel/:id/:value")
     .post(isLoggedIn, validateBookingId, passport.authenticate("local", { failureFlash: true, failureRedirect: "/bookings" }), catchAsync(flight.deleteBookings));
 
-router.route("/contact")
-    .get(flight.renderContactForm)
-    .post(catchAsync(flight.saveContactDetails)); 
-
-
 module.exports = router;
