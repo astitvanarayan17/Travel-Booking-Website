@@ -1,109 +1,128 @@
 <% layout("layouts/boilerplate") %>
 
-<div>
-	<div class="row">
+<!-- Add custom CSS for review page -->
+<link rel="stylesheet" href="/stylesheets/review-styles.css">
 
-		<div class="col-12 col-md-8">
-			<div class="card review-card">
-				<div class="card-header"><h2>Itinerary</h2></div>
-				
-				<div class="card-body">
-					<h2>
-						<div class="row">
-							<div class="col">
-								<%= detail.from %> - <%= detail.to %>						
-							</div>	
-							<div class="col text-center">
-
-							</div>
-							<div class="col text-right">
-								<%= detail.date %>
-							</div>	
-						</div>	
-					</h2>
-					<hr>
-					<h2 class="card-title">
-						<div class="row">
-							<div class="col-sm-4">
-								<%= detail.airline %>			
-							</div>	
-							<div class="col-sm-4 text-center">
-								<%= detail.fromTime %><span class="fas fa-plane plane"></span><%= detail.toTime %>
-							</div>
-							<div class="col-sm-4 text-right">
-								<%= detail.group %>
-							</div>	
-						</div>	    
-					</h2>
-					<hr>
-					<% if (detail.passengerCount > 1) { %>
-						<h5>Travellers : <%= detail.passengerCount %></h5>
-					<% } else { %>
-						<h5>Traveller : <%= detail.passengerCount %></h5>				
-					<% } %> 
-					<h5>Baggage : 15kg + 7kg</h5>
-					<form action="/traveller" method="get">
-						<div class="card-footer text-center">
-							<button type="submit" class="btn btn-dark rnt-btn">CONTINUE</button>
-						</div>
-					</form>
-				</div>
-				
-			</div>
-		</div>
-
-		<div class="col-6 col-md-4">
-			
-			<div class="progress above-fare">
-				<div class="progress-bar bg-dark" role="progressbar" style="width: 60%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Review</div>
-			</div>
-			<div class="card fare-card">
-				<div class="card-header"><h2>Fare Summary</h2></div>
-				<div class="card-body">
-					<h4>
-						<div class="row">
-							<div class="col-8">
-								Base Fare
-							</div>	
-							<div class="col-4 text-right">
-								₹<%= detail.price - 489 %>
-							</div>
-						</div>
-						<hr>
-						<div class="row">
-							<div class="col-8">
-								Fee & Taxes
-							</div>	
-							<div class="col-4 text-right">
-								₹420
-							</div>
-						</div>
-						<hr>
-						<div class="row">
-							<div class="col-8">
-								Other Charges		
-							</div>	
-							<div class="col-4 text-right">
-								₹69
-							</div>
-						</div>
-					</h4>
-				</div>
-				<div class="card-footer">
-					<h2>
-						<div class="row">
-							<div class="col">
-								Total Fare
-                                <h5 style="margin-bottom: 0;">(₹<%= detail.price %> X <%= detail.passengerCount %>)</h5>		
-							</div>	
-							<div class="col text-right">
-								₹<%= detail.price*detail.passengerCount %>
-							</div>
-						</div>
-					</h2>
-				</div>
-			</div>
-		</div>
-
-	</div>
+<div class="review-container">
+    <div class="row">
+        <div class="col-12 col-lg-8">
+            <!-- Itinerary Card -->
+            <div class="card itinerary-card mb-4">
+                <div class="itinerary-header">
+                    <h2>Your Flight Itinerary</h2>
+                    <p class="mb-0"><%= new Date(detail.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %></p>
+                </div>
+                
+                <div class="flight-route">
+                    <div class="airport">
+                        <h3 class="airport-code"><%= detail.from %></h3>
+                        <p class="airport-name">Departure</p>
+                    </div>
+                    
+                    <div class="flight-duration">
+                        <i class="fas fa-plane"></i>
+                        <div><%= detail.duration || '2h 30m' %></div>
+                    </div>
+                    
+                    <div class="airport">
+                        <h3 class="airport-code"><%= detail.to %></h3>
+                        <p class="airport-name">Arrival</p>
+                    </div>
+                </div>
+                
+                <div class="flight-details p-4">
+                    <div class="airline-info">
+                        <div class="airline-logo">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                        <div>
+                            <h4 class="mb-0"><%= detail.airline %></h4>
+                            <p class="text-muted mb-0"><%= detail.group %> Class • Flight #<%= detail.flightNumber || '--' %></p>
+                        </div>
+                    </div>
+                    
+                    <div class="flight-timings">
+                        <div class="timing">
+                            <div class="time"><%= detail.fromTime %></div>
+                            <div class="place"><%= detail.from %></div>
+                        </div>
+                        <div class="timing text-center">
+                            <div class="text-muted">→</div>
+                            <div class="text-muted small">Non-stop</div>
+                        </div>
+                        <div class="timing text-right">
+                            <div class="time"><%= detail.toTime %></div>
+                            <div class="place"><%= detail.to %></div>
+                        </div>
+                    </div>
+                    
+                    <div class="passenger-info">
+                        <p><i class="fas fa-users me-2"></i> <%= detail.passengerCount %> <%= detail.passengerCount > 1 ? 'Travellers' : 'Traveller' %></p>
+                        <p><i class="fas fa-suitcase me-2"></i> 15kg Check-in + 7kg Cabin baggage included</p>
+                    </div>
+                    
+                    <form action="/traveller" method="get">
+                        <button type="submit" class="btn btn-continue">
+                            <i class="fas fa-arrow-right me-2"></i> Continue to Passenger Details
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-12 col-lg-4">
+            <!-- Progress -->
+            <div class="card mb-4">
+                <div class="card-body p-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="small text-muted">Step 2 of 4</span>
+                        <span class="small font-weight-bold">Review Booking</span>
+                    </div>
+                    <div class="progress" style="height: 6px;">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Fare Summary -->
+            <div class="card fare-card mb-4">
+                <div class="fare-header">
+                    <h2>Fare Summary</h2>
+                </div>
+                <div class="card-body p-0">
+                    <div class="fare-item">
+                        <span>Base Fare</span>
+                        <span>₹<%= detail.price - 489 %></span>
+                    </div>
+                    <div class="fare-item">
+                        <span>Fee & Taxes</span>
+                        <span>₹420</span>
+                    </div>
+                    <div class="fare-item">
+                        <span>Other Charges</span>
+                        <span>₹69</span>
+                    </div>
+                    <div class="fare-item fare-total">
+                        <div>
+                            <strong>Total Amount</strong>
+                            <div class="small text-muted">(₹<%= detail.price %> × <%= detail.passengerCount %>)</div>
+                        </div>
+                        <strong>₹<%= detail.price * detail.passengerCount %></strong>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Need Help? -->
+            <div class="card">
+                <div class="card-body text-center">
+                    <i class="fas fa-headset fa-2x text-primary mb-3"></i>
+                    <h5>Need Help?</h5>
+                    <p class="small text-muted">Our 24/7 customer service team is here to assist you with any questions.</p>
+                    <button class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-phone-alt me-1"></i> Contact Support
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

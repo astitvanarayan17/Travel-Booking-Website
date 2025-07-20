@@ -31,18 +31,44 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
 	<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css"/>
 
-	<title>Avian</title>
+	<title>Wanderlust</title>
 
 </head>
-<body>
-
+<body class="d-flex flex-column min-vh-100">
+	
 	<%- include("../partials/navbar") %>
 	
 	<%- include("../partials/flash") %>
 
-    <%- body %>
+    <main class="flex-shrink-0">
+        <%- body %>
+    </main>
 
 	<%- include("../partials/footer") %>
 	
+    <script>
+        // Fade-in animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const fadeInOnScroll = function() {
+                fadeElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    // If element is in viewport
+                    if (elementTop < windowHeight - 100) {
+                        element.classList.add('visible');
+                    }
+                });
+            };
+            
+            // Run once on page load
+            fadeInOnScroll();
+            
+            // Run on scroll
+            window.addEventListener('scroll', fadeInOnScroll);
+        });
+    </script>
 </body>
 </html>

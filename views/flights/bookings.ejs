@@ -1,70 +1,116 @@
 <% layout("layouts/boilerplate") %>
+<link rel="stylesheet" href="/stylesheets/bookings-styles.css">
 
-<div>
-	<div class="card bg-transparent big-list-card">
-		<div class="card-body">
-			<h1>Bookings</h1>
-			<hr> <br>
-			
-			<% if (!details || details.length == 0) { %>
-				<br> <br>
-				<div class="no-bookings">
-					<hr>
-						<h1>No Bookings</h1>
-					<hr>
-				</div>
-			<% } %>
-
-			<% for (let detail of details) { %>
-				<div class="card border-dark list-card">
-					<div class="card-body">
-						<h3 class="card-title">
-							<div class="row">
-								<div class="col">
-									<%= detail.from %> -> <%= detail.to %>	
-								</div>	
-								<div class="col text-right">
-									<a href="/boarding-pass/<%= detail._id %>" class="btn btn-outline-dark" style="width: 8rem">VIEW</a>
-									<a href="/cancel/<%= detail._id %>" class="btn btn-outline-danger" style="width: 8rem;">CANCEL</a>
-								</div>
-							</div>
-						</h3>
-						<h6><%= detail.date %></h6>
-						<hr>
-						<h5>
-							<div class="row">
-								<div class="col">
-									<i class="fas fa-plane-departure"></i>
-									<br>
-									<%= detail.fromTime %>	
-									<br>
-									<%= getCity(detail.from) %>
-								</div>	
-								<div class="col">
-									<i class="fas fa-plane-arrival"></i>
-									<br>
-									<%= detail.toTime %>	
-									<br>
-									<%= getCity(detail.to) %>
-								</div>
-								<div class="col-lg-4 col-sm-6 text-center">
-									<br>
-									<b><%= detail.airline %></b>
-									<br>
-									<% if (detail.passengerCount > 1) { %>
-										<%= detail.group %> | <%= detail.passengerCount %> Travellers
-									<% } else { %>
-										<%= detail.group %> | <%= detail.passengerCount %> Traveller						
-									<% } %>		
-								</div>
-								<div class="col"></div>	
-							</div>							
-						</h5>
-					</div>
-				</div>
-				<br>
-			<% } %>
-
-		</div>
-	</div>
+<div class="bookings-container">
+    <div class="bookings-header">
+        <h1>My Bookings</h1>
+        <p>Manage your upcoming and past flight reservations</p>
+    </div>
+    
+    <% if (!details || details.length == 0) { %>
+        <div class="no-bookings">
+            <i class="far fa-calendar-alt" style="font-size: 3rem; color: #cbd5e1; margin-bottom: 1rem;"></i>
+            <h1>No Bookings Found</h1>
+            <p>You don't have any upcoming or past bookings.</p>
+            <a href="/flights" class="btn btn-primary" style="margin-top: 1.5rem;">
+                <i class="fas fa-search"></i> Search Flights
+            </a>
+        </div>
+    <% } else { %>
+        <% for (let detail of details) { %>
+            <div class="booking-card">
+                <div class="booking-header">
+                    <div class="route">
+                        <span><%= detail.from %> -> <%= detail.to %></span>
+                    </div>
+                    <div class="booking-actions">
+                        <a href="/boarding-pass/<%= detail._id %>" class="btn btn-view">
+                            <i class="fas fa-ticket-alt"></i> VIEW
+                        </a>
+                        <a href="/cancel/<%= detail._id %>" class="btn btn-cancel" 
+                           onclick="return confirm('Are you sure you want to cancel this booking?')">
+                            <i class="fas fa-times"></i> CANCEL
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="booking-body">
+                    <div class="flight-details">
+                        <div class="detail-group">
+                            <span class="detail-label">Departure</span>
+                            <span class="detail-value">
+                                <i class="fas fa-plane-departure detail-icon"></i>
+                                <%= detail.fromTime %>	
+                                <br>
+                                <%= getCity(detail.from) %>
+                            </span>
+                        </div>
+                        
+                        <div class="detail-group">
+                            <span class="detail-label">Arrival</span>
+                            <span class="detail-value">
+                                <i class="fas fa-plane-arrival detail-icon"></i>
+                                <%= detail.toTime %>	
+                                <br>
+                                <%= getCity(detail.to) %>
+                            </span>
+                        </div>
+                        
+                        <div class="detail-group">
+                            <span class="detail-label">Date</span>
+                            <span class="detail-value">
+                                <i class="far fa-calendar-alt detail-icon"></i>
+                                <%= detail.date %>
+                            </span>
+                        </div>
+                        
+                        <div class="detail-group">
+                            <span class="detail-label">Airline</span>
+                            <span class="detail-value">
+                                <b><%= detail.airline %></b>
+                            </span>
+                        </div>
+                        
+                        <div class="detail-group">
+                            <span class="detail-label">Passengers</span>
+                            <span class="detail-value">
+                                <% if (detail.passengerCount > 1) { %>
+                                    <%= detail.group %> | <%= detail.passengerCount %> Travellers
+                                <% } else { %>
+                                    <%= detail.group %> | <%= detail.passengerCount %> Traveller						
+                                <% } %>		
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="booking-footer">
+                    <div class="airline-info">
+                        <div class="airline-logo">
+                            <%= detail.airline ? detail.airline.charAt(0) : '✈' %>
+                        </div>
+                        <div>
+                            <div class="airline-name"><%= detail.airline || 'Flight' %></div>
+                            <div class="passenger-count">
+                                <%= detail.group %> • 
+                                <%= detail.passengerCount %> <%= detail.passengerCount > 1 ? 'Travellers' : 'Traveller' %>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="booking-status">
+                        <span class="status-badge status-confirmed">
+                            <i class="fas fa-check-circle"></i> Confirmed
+                        </span>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    <% } %>
+    
+    <div class="text-center mt-8" style="margin-top: 3rem;">
+        <a href="/flights" class="btn btn-primary">
+            <i class="fas fa-search"></i> Search More Flights
+        </a>
+    </div>
 </div>

@@ -1,53 +1,286 @@
 <% layout("layouts/boilerplate") %>
 
-<% 	
-	let date = new Date();
-	date.setDate(date.getDate() + 1); 
-	date = date.toLocaleDateString("en-GB", {month: "2-digit",day: "2-digit",year: "numeric"}).split("/").join(".") 
+<%
+    let dateObj = new Date();
+    dateObj.setDate(dateObj.getDate() + 1);
+    let dateISO = dateObj.toISOString().split('T')[0]; // YYYY-MM-DD for input[type=date]
 %>
 
-<form action="/" method="post">		
-	<div>
-		<div class="center">
-			<div class="input-group input-group-lg">
-				<label for="from" class="form-control heading-label">FROM</label>
-				<label for="to" class="form-control heading-label">TO</label>
-				<label for="date" class="form-control heading-label">DEPARTURE</label>
-				<label for="passengerCount" class="form-control heading-label">TRAVELLERS</label>
-			</div>
-			<div class="input-group input-group-lg">
-				<input list="airports" type="text" aria-label="from" class="form-control index-input" value="DEL" name="from" autocomplete="false" required>
-				<input list="airports" type="text" aria-label="to" class="form-control index-input" value="MAA" name="to" autocomplete="false" required>
-				<datalist id="airports">
-					<% for (let airport of airports) { %>
-						<option value=<%= airport.IATA_code %>><%= airport.city_name %></option>
-					<% } %>
-				</datalist>
-				<input type="text" id="datepicker" aria-label="date" class="form-control index-input"  name="date" value="<%= date %>" autocomplete="false" required>
-				<select class="form-control" name="passengerCount" required>
-					<option value=1>1</option>
-					<option value=2>2</option>
-					<option value=3>3</option>
-					<option value=4>4</option>
-					<option value=5>5</option>
-					<option value=6>6</option>
-				</select>
-			</div>
-			<div class="bt">
-				<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-					<input type="radio" class="btn-check" name="group" id="group1" autocomplete="off" value="Economy" checked>
-					<label class="btn btn-outline-secondary" for="group1">Economy</label>
-
-					<input type="radio" class="btn-check" name="group" id="group2" autocomplete="off" value="Premium">
-					<label class="btn btn-outline-secondary" for="group2">Premium</label>
-
-					<input type="radio" class="btn-check" name="group" id="group3" autocomplete="off" value="Business">
-					<label class="btn btn-outline-secondary" for="group3">Business</label>
-				</div>
-				<button type="submit" class="btn btn-dark btn-lg button">SEARCH</button>
-			</div>
-		</div>	
-	</div>
-</form>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <form action="/" method="post" class="bg-white p-4 rounded-3 shadow-sm">
+                <div class="row g-3">
+                    <!-- From -->
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold text-muted small mb-1">FROM</label>
+                        <input list="airports" type="text" class="form-control form-control-lg" value="DEL" name="from" required>
+                    </div>
+                    
+                    <!-- To -->
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold text-muted small mb-1">TO</label>
+                        <input list="airports" type="text" class="form-control form-control-lg" value="MAA" name="to" required>
+                    </div>
+                    
+                    <datalist id="airports">
+                        <% for (let airport of airports) { %>
+                            <option value=<%= airport.IATA_code %>><%= airport.city_name %></option>
+                        <% } %>
+                    </datalist>
+                    
+                    <!-- Date -->
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold text-muted small mb-1">DEPARTURE</label>
+                        <input type="date" class="form-control form-control-lg" id="date" name="date" value="<%= dateISO %>" min="<%= dateISO %>" required>
+                    </div>
+                    
+                    <!-- Passengers -->
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold text-muted small mb-1">TRAVELLERS</label>
+                        <select class="form-select form-select-lg" id="passengerCount" name="passengerCount" required>
+                            <option value="1">1 Adult</option>
+                            <option value="2">2 Adults</option>
+                            <option value="3">3 Adults</option>
+                            <option value="4">4 Adults</option>
+                            <option value="5">5 Adults</option>
+                            <option value="6">6 Adults</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Class -->
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold text-muted small mb-1 d-block">CLASS</label>
+                        <div class="btn-group w-100" role="group">
+                            <input type="radio" class="btn-check" name="group" id="group1" autocomplete="off" value="Economy" checked>
+                            <label class="btn btn-outline-secondary" for="group1">Econ</label>
+                            
+                            <input type="radio" class="btn-check" name="group" id="group2" autocomplete="off" value="Premium">
+                            <label class="btn btn-outline-secondary" for="group2">Prem</label>
+                            
+                            <input type="radio" class="btn-check" name="group" id="group3" autocomplete="off" value="Business">
+                            <label class="btn btn-outline-secondary" for="group3">Buss.</label>
+                        </div>
+                    </div>
+                    
+                    <!-- Search Button -->
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary btn-lg w-100">
+                            <i class="fas fa-search me-2"></i>Search
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <script src="/scripts/datePicker.js"></script>
+
+<!-- About Us Section -->
+<style>
+    .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Add delay for staggered animations */
+    .fade-in.delay-1 { transition-delay: 0.2s; }
+    .fade-in.delay-2 { transition-delay: 0.4s; }
+    .fade-in.delay-3 { transition-delay: 0.6s; }
+</style>
+
+<section class="py-5 bg-transparent fade-in">
+    <div class="container mt-5">
+        <div class="row g-5 align-items-center">
+            <!-- Image on Left -->
+            <div class="col-lg-6">
+                <div class="position-relative rounded-4 overflow-hidden" style="height: 500px;">
+                    <img src="https://images.unsplash.com/photo-1556388158-158ea5ccacbd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Airport terminal with planes" 
+                         class="w-100 h-100"
+                         style="object-fit: cover;">
+                    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" style="background: rgba(0, 0, 0, 0.4);">
+                        <div class="text-center text-white p-4">
+                            <i class="fas fa-plane-departure display-3 mb-3"></i>
+                            <h3 class="fw-bold">Your Journey Starts Here</h3>
+                            <p class="mb-0">Let us take you places</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Content on Right -->
+            <div class="col-lg-6 ps-lg-5">
+                <span class="text-primary fw-bold mb-2 d-block">ABOUT US</span>
+                <h2 class="fw-bold mb-4">Your Journey, Our Passion</h2>
+                <p class="text-muted mb-5">At TravelEase, we believe that every journey should be as unique as the traveler. With years of experience in the travel industry, we've helped thousands of explorers discover the world's most amazing destinations.</p>
+                
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start">
+                            <div class="me-3 text-primary">
+                                <i class="fas fa-route fa-2x"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold mb-1">Expert Guidance</h5>
+                                <p class="mb-0 text-muted small">Our travel experts provide personalized recommendations based on your preferences.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start">
+                            <div class="me-3 text-primary">
+                                <i class="fas fa-headset fa-2x"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold mb-1">24/7 Support</h5>
+                                <p class="mb-0 text-muted small">Round-the-clock assistance for all your travel needs, anytime, anywhere.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start">
+                            <div class="me-3 text-primary">
+                                <i class="fas fa-tag fa-2x"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold mb-1">Best Prices</h5>
+                                <p class="mb-0 text-muted small">Competitive pricing and exclusive deals you won't find anywhere else.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start">
+                            <div class="me-3 text-primary">
+                                <i class="fas fa-shield-alt fa-2x"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold mb-1">Safe Travels</h5>
+                                <p class="mb-0 text-muted small">Your safety and comfort are our top priorities throughout your journey.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials py-3 bg-transparent mb-0 fade-in delay-1">
+    <div class="container">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold mb-3">What Our Travelers Say</h2>
+            <p class="text-muted">Hear from our satisfied customers about their experiences</p>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Testimonial 1 -->
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="https://randomuser.me/api/portraits/women/45.jpg" 
+                             class="rounded-circle me-3" width="60" height="60" 
+                             alt="Sarah K.">
+                        <div>
+                            <h5 class="mb-0 fw-bold">Sarah K.</h5>
+                            <div class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mb-0">"Amazing experience! The team helped me plan the perfect trip. Everything was well-organized and exceeded my expectations."</p>
+                </div>
+            </div>
+            
+            <!-- Testimonial 2 -->
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" 
+                             class="rounded-circle me-3" width="60" height="60" 
+                             alt="Michael T.">
+                        <div>
+                            <h5 class="mb-0 fw-bold">Michael T.</h5>
+                            <div class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mb-0">"The best travel agency I've worked with. Their local guides were knowledgeable and the accommodations were top-notch."</p>
+                </div>
+            </div>
+            
+            <!-- Testimonial 3 -->
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" 
+                             class="rounded-circle me-3" width="60" height="60" 
+                             alt="Priya M.">
+                        <div>
+                            <h5 class="mb-0 fw-bold">Priya M.</h5>
+                            <div class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mb-0">"Exceptional service from start to finish. They took care of every detail, allowing us to truly enjoy our vacation."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .testimonials .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(5px);
+    }
+    
+    .testimonials .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    .testimonials img {
+        object-fit: cover;
+    }
+    
+    .testimonials {
+        margin-top: 3rem;
+    }
+    
+    .testimonials h2 {
+        color: #2c3e50;
+    }
+</style>

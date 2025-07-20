@@ -1,13 +1,144 @@
-<footer class="bg-dark">
-    <div class="footer-content">
-        <ul class="socials">
-            <li><a href="#"><i class="fa fa-linkedin-square"></i></a></li>
-            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-        </ul>
-    </div>
-    <div class="footer-bottom text-white">
-        <h5 style="color: white;">Avian © <%= new Date().getFullYear() %><h5>
+<footer style="position: relative; bottom: 200px; margin-bottom: -200px;" class="bg-dark text-white pt-5 pb-4">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Company Info -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="footer-logo mb-4">
+                    <a href="/" class="d-flex align-items-center text-decoration-none">
+                        <span class="footer-logo-text">
+                            <span class="text-primary">Wander</span><span>lust</span>
+                            <i class="fas fa-plane-departure ms-2"></i>
+                        </span>
+                    </a>
+                    <p class="brand-tagline mt-2 mb-0 text-muted">Your journey, our passion</p>
+                </div>
+                <p class="text-muted">Your trusted partner for seamless travel experiences. We make your journey comfortable, memorable, and hassle-free.</p>
+                <div class="social-links mt-4">
+                    <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-lg-2 col-md-6 mb-4">
+                <h6 class="text-uppercase fw-bold mb-4">Quick Links</h6>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="/" class="text-muted text-decoration-none">Home</a></li>
+                    <li class="mb-2"><a href="/flights" class="text-muted text-decoration-none">Flights</a></li>
+                    <li class="mb-2"><a href="/about" class="text-muted text-decoration-none">About Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h6 class="text-uppercase fw-bold mb-4">Contact Us</h6>
+                <ul class="list-unstyled text-muted">
+                    <li class="mb-3">
+                        <i class="fas fa-map-marker-alt me-2"></i> 123 Travel Street, Mumbai, India
+                    </li>
+                    <li class="mb-3">
+                        <i class="fas fa-phone me-2"></i> +91 12345 67890
+                    </li>
+                    <li class="mb-3">
+                        <i class="fas fa-envelope me-2"></i> info@wanderlust.com
+                    </li>
+                    <li class="mb-3">
+                        <i class="fas fa-clock me-2"></i> Mon-Sun: 8:00 AM - 10:00 PM
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h6 class="text-uppercase fw-bold mb-4">Newsletter</h6>
+                <p class="text-muted">Subscribe to get special offers and travel tips</p>
+                <form class="mb-3">
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Your email" aria-label="Email" required>
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+        <hr class="my-4 bg-secondary">
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                <p class="mb-0 text-muted">© <%= new Date().getFullYear() %> wanderlust. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item"><a href="#" class="text-muted text-decoration-none">Privacy Policy</a></li>
+                    <li class="list-inline-item mx-2">|</li>
+                    <li class="list-inline-item"><a href="#" class="text-muted text-decoration-none">Terms of Service</a></li>
+                    <li class="list-inline-item mx-2">|</li>
+                    <li class="list-inline-item"><a href="#" class="text-muted text-decoration-none">Sitemap</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </footer>
+
+<style>
+    .footer-logo-text {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: white;
+        display: inline-flex;
+        align-items: center;
+        transition: all 0.3s ease;
+    }
+    
+    .footer-logo-text .text-primary {
+        color: #0d6efd;
+        position: relative;
+    }
+    
+    .footer-logo-text i {
+        font-size: 1.4rem;
+        margin-left: 0.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .footer-logo:hover .footer-logo-text {
+        transform: translateY(-2px);
+    }
+    
+    .footer-logo:hover i {
+        transform: translateX(5px) rotate(15deg);
+    }
+    
+    .brand-tagline {
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+    }
+    
+    footer a {
+        transition: all 0.3s ease;
+    }
+    footer a:hover {
+        color: #0d6efd !important;
+        text-decoration: none;
+    }
+    .social-links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.1);
+        margin-right: 8px;
+    }
+    .social-links a:hover {
+        background-color: #0d6efd;
+        color: white !important;
+        transform: translateY(-3px);
+    }
+</style>
