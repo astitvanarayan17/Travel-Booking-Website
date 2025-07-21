@@ -1,0 +1,142 @@
+/* Booking Page Styles */
+.booking-main {
+    min-height: calc(100vh - 200px);
+    background-color: #f8fafc;
+    padding: 3rem 1rem;
+}
+
+.booking-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    padding: 2.5rem;
+    border: 1px solid #e2e8f0;
+}
+
+.booking-container h2 {
+    color: #0f172a;
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: 700;
+}
+
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #334155;
+    font-size: 0.9375rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s;
+    background-color: #ffffff;
+    color: #1e293b;
+}
+
+.form-control:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    outline: none;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.875rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: white;
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+/* Booking Details */
+.booking-details {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    border: 1px dashed #cbd5e1;
+}
+
+.booking-details h3 {
+    font-size: 1.25rem;
+    color: #0f172a;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.booking-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.info-item {
+    margin-bottom: 0.5rem;
+}
+
+.info-label {
+    font-size: 0.875rem;
+    color: #64748b;
+    margin-bottom: 0.25rem;
+}
+
+.info-value {
+    font-weight: 500;
+    color: #0f172a;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .booking-container {
+        padding: 1.5rem;
+    }
+    
+    .booking-container h2 {
+        font-size: 1.5rem;
+    }
+    
+    .booking-info {
+        grid-template-columns: 1fr;
+    }
+    
+    .btn {
+        padding: 0.75rem 1rem;
+    }
+}
