@@ -22,9 +22,7 @@ const authRoutes = require("./routes/auth");
 const dbUrl = process.env.dbURL || "mongodb://localhost:27017/flightDB";
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false
+    useUnifiedTopology: true
 });
 
 const db = mongoose.connection;
