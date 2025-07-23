@@ -1,0 +1,37 @@
+<% layout("layouts/boilerplate") %>
+<link rel="stylesheet" href="/stylesheets/trainResults.css" />
+
+<div class="results-container">
+  <h2 class="results-heading">
+    Available Trains from <%= details.from %> to <%= details.to %>
+  </h2>
+  <p class="results-subheading">
+    Date: <%= details.date %> &nbsp;|&nbsp;
+    Class: <%= details.travelClass %> &nbsp;|&nbsp;
+    Passengers: <%= details.passengers %>
+  </p>
+
+  <% if (matchedTrains.length === 0) { %>
+    <p class="no-trains">No trains available for this route.</p>
+  <% } else { %>
+    <ul class="train-list">
+      <% matchedTrains.forEach(train => { %>
+        <li class="train-card">
+          <h3><%= train.trainName %> (<%= train.trainNumber %>)</h3>
+          <p>
+            <strong>Departure:</strong> <%= train.departure %> &nbsp;|&nbsp;
+            <strong>Arrival:</strong> <%= train.arrival %> &nbsp;|&nbsp;
+            <strong>Duration:</strong> <%= train.duration %>
+          </p>
+          <p>
+            <strong>Price:</strong> ₹<%= train.price[details.travelClass] %>
+          </p>
+          <form action="/trains/<%= train._id || '123' %>/book" method="POST">
+            <button type="submit" class="book-btn">Book This Train</button>
+          </form>
+        </li>
+      <% }); %>
+    </ul>
+  <% } %>
+</div>
+

@@ -1,0 +1,56 @@
+<% layout("layouts/boilerplate") %>
+<link rel="stylesheet" href="/stylesheets/train-index.css" />
+
+<div class="background-wrapper">
+  <div class="train-search-container">
+    <h2>Journey Details</h2>
+    <form class="train-form" action="/trains/search" method="POST">
+      <div>
+        <label for="from">Source</label>
+        <input type="text" name="from" placeholder="Source" required />
+      </div>
+
+      <div>
+        <label for="to">Destination</label>
+        <input type="text" name="to" placeholder="Destination" required />
+      </div>
+
+      <div class="radio-group">
+        <label>Type</label>
+        <input type="radio" name="type" value="Single" checked /> Single
+        <input type="radio" name="type" value="Return" /> Return
+      </div>
+
+      <div class="class-group">
+        <label>Class</label>
+        <input type="radio" name="class" value="First" checked /> First
+        <input type="radio" name="class" value="Second" /> Second
+      </div>
+
+      <div>
+        <label for="passengers">Passengers</label>
+        <input type="text" name="passengers" placeholder="1" required />
+      </div>
+
+      <div>
+        <label for="date">Date</label>
+        <input type="date" name="date" required />
+      </div>
+
+      <div>
+        <label for="via">Via</label>
+        <select name="via">
+          <option value="none">none</option>
+          <option value="Kanpur">Kanpur</option>
+          <option value="Agra">Agra</option>
+          <option value="Bhopal">Bhopal</option>
+        </select>
+      </div>
+
+      <div>
+        <label>&nbsp;</label>
+        <button type="submit">Book Now</button>
+      </div>
+    </form>
+  </div>
+</div>
