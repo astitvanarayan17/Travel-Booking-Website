@@ -1,0 +1,71 @@
+.background-wrapper {
+    background-image: url("/images/trainJourney.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 40px 20px;
+  }
+  
+  
+.train-search-container {
+    background-color: #0b0c1b;
+    color: white;
+    padding: 2rem;
+    max-width: 700px;
+    margin: 2rem auto;
+    border-radius: 10px;
+    font-family: Arial, sans-serif;
+  }
+
+  .train-search-container h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .train-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 2rem;
+  }
+
+  .train-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    color: #ccc;
+  }
+
+  .train-form input[type="text"],
+  .train-form input[type="date"],
+  .train-form select {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: none;
+    font-size: 1rem;
+  }
+
+  .train-form input[type="radio"] {
+    margin-right: 5px;
+  }
+
+  .full-width {
+    grid-column: span 2;
+  }
+
+  .train-form .radio-group,
+  .train-form .class-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .train-form button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+  }

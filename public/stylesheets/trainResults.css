@@ -1,0 +1,99 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f6f9;
+  }
+  
+  .container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .subtext {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  .train-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .train-card {
+    padding: 15px 20px;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    background-color: #fafafa;
+    transition: 0.3s ease;
+  }
+  
+  .train-card:hover {
+    background-color: #eef4ff;
+    border-color: #a2c4f9;
+  }
+  
+  .train-card h3 {
+    margin: 0 0 10px;
+    color: #1a237e;
+  }
+  
+  .train-card p {
+    margin: 5px 0;
+    color: #444;
+  }
+  
+  .train-card .price {
+    font-weight: bold;
+    color: #2e7d32;
+  }
+  
+  .train-card form {
+    margin-top: 10px;
+  }
+  
+  .train-card button {
+    background-color: #1e88e5;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .train-card button:hover {
+    background-color: #1565c0;
+  }
+  
+  .no-result {
+    color: #d32f2f;
+    font-weight: 500;
+    margin-top: 20px;
+    text-align: center;
+  }
+  .journey-box {
+    background-image: url("/images/trainJourney.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  
+    padding: 20px;
+    border-radius: 10px;
+    color: #fff; /* if image is dark */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+  
