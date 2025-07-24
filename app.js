@@ -18,6 +18,7 @@ const User = require("./models/user");
 
 const flightRoutes = require("./routes/flight");
 const authRoutes = require("./routes/auth");
+const trainRoutes = require("./routes/trains"); // ✅ Require here
 
 const dbUrl = process.env.dbURL || "mongodb://localhost:27017/flightDB";
 mongoose.connect(dbUrl, {
@@ -28,10 +29,10 @@ mongoose.connect(dbUrl, {
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "Connection Error:"));
 db.once("open", () => {
-    console.log("Database Connected")
+    console.log("Database Connected");
 });
 
-const app = express();
+const app = express(); // ✅ moved above any `app.use`
 
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
@@ -42,7 +43,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const store = MongoStore.create({
     mongoUrl: dbUrl,
-    touchAfter: 24*60*60
+    touchAfter: 24 * 60 * 60
 });
 store.on("error", function (err) {
     console.log("Session Store Error", err);
@@ -56,8 +57,8 @@ const sessionConfig = {
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
-        expires: Date.now() + 1000*60*60*24*7,
-        maxAge: 1000*60*60*24*7
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7
     }
 }
 app.use(session(sessionConfig));
@@ -83,6 +84,7 @@ app.use((req, res, next) => {
 
 app.use("/", flightRoutes);
 app.use("/", authRoutes);
+app.use("/trains", trainRoutes); // ✅ Mounted here after `app` is initialized
 
 app.all("*", (req, res, next) => {
     res.redirect("/");
@@ -94,8 +96,7 @@ app.use((err, req, res, next) => {
     res.redirect("/");
 });
 
-
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Server live at http://localhost:${port}`);
 });
