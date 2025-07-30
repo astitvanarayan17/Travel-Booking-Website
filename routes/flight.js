@@ -32,7 +32,7 @@ router.route("/boarding-pass/:id")
 router.route("/cancel/:id")
     .get(isLoggedIn, validateBookingId, catchAsync(flight.renderCancel));
 
-router.route("/cancel/:id/:value")
-    .post(isLoggedIn, validateBookingId, passport.authenticate("local", { failureFlash: true, failureRedirect: "/bookings" }), catchAsync(flight.deleteBookings));
+router.route("/cancel/:id")
+    .post(isLoggedIn, validateBookingId, catchAsync(flight.deleteBookings));
 
 module.exports = router;

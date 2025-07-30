@@ -1,4 +1,3 @@
-const BookingDetail = require("../models/bookingDetail");
 const airportsList = require("../utils/airportsList");
 
 module.exports.isLoggedIn = (req, res, next) => {
@@ -42,10 +41,15 @@ module.exports.validateSearchData = (req, res, next) => {
     next();
 }
 
-module.exports.validateBookingId = async (req, res, next) => {
+module.exports.validateBookingId = (req, res, next) => {
     try {
-        const exists = await BookingDetail.exists({ _id: req.params.id });
-        if (exists) return next();
+        const { id } = req.params;
+        const bookings = req.session.bookings || [];
+        
+        if (id >= 0 && id < bookings.length) {
+            return next();
+        }
+        
         req.flash("error", "Invalid Boarding Pass");
         res.redirect("/bookings");
     } catch (err) {

@@ -7,7 +7,7 @@
         <p>Manage your upcoming and past flight reservations</p>
     </div>
     
-    <% if (!details || details.length == 0) { %>
+    <% if (!bookings || bookings.length == 0) { %>
         <div class="no-bookings">
             <i class="far fa-calendar-alt" style="font-size: 3rem; color: #cbd5e1; margin-bottom: 1rem;"></i>
             <h1>No Bookings Found</h1>
@@ -17,7 +17,7 @@
             </a>
         </div>
     <% } else { %>
-        <% for (let detail of details) { %>
+        <% for (let detail of bookings) { %>
             <div class="booking-card">
                 <div class="booking-header">
                     <div class="route">
@@ -40,7 +40,7 @@
                             <span class="detail-label">Departure</span>
                             <span class="detail-value">
                                 <i class="fas fa-plane-departure detail-icon"></i>
-                                <%= detail.fromTime %>	
+                                <%= detail.departureTime ? new Date(detail.departureTime).toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'}) : 'N/A' %>	
                                 <br>
                                 <%= getCity(detail.from) %>
                             </span>
@@ -50,7 +50,7 @@
                             <span class="detail-label">Arrival</span>
                             <span class="detail-value">
                                 <i class="fas fa-plane-arrival detail-icon"></i>
-                                <%= detail.toTime %>	
+                                <%= detail.arrivalTime ? new Date(detail.arrivalTime).toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'}) : 'N/A' %>	
                                 <br>
                                 <%= getCity(detail.to) %>
                             </span>
@@ -60,7 +60,7 @@
                             <span class="detail-label">Date</span>
                             <span class="detail-value">
                                 <i class="far fa-calendar-alt detail-icon"></i>
-                                <%= detail.date %>
+                                <%= detail.departureTime ? new Date(detail.departureTime).toLocaleDateString() : 'N/A' %>
                             </span>
                         </div>
                         

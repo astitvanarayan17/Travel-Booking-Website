@@ -1,6 +1,6 @@
 <% layout("layouts/boilerplate") %>
 
-<% for (let passenger of bookingDetail.passengers) { %>
+<% for (let passenger of flight.passengers) { %>
 	<div>
 		<div class="card text-white bg-dark details-card">
 			<div class="card-header">
@@ -22,15 +22,15 @@
 						<div class="col">
 							<br>
 							<h4 class="card-text">Name</h4>
-							<h2 class="card-title"><b><%= passenger %></b></h2>
+							<h2 class="card-title"><b><%= passenger.name %></b></h2>
 							<br>
 							<br>
 							<h4 class="card-text">FROM</h4>
-							<h2 class="card-title"><b><%= getCity(bookingDetail.from) %></b></h2>
+							<h2 class="card-title"><b><%= getCity(flight.from) %></b></h2>
 							<br>
 							<br>
 							<h4 class="card-text">TO</h4>
-							<h2 class="card-title"><b><%= getCity(bookingDetail.to) %></b></h2>
+							<h2 class="card-title"><b><%= getCity(flight.to) %></b></h2>
 						</div>
 						<div class="col">
 							<br>
@@ -39,11 +39,11 @@
 							<br>
 							<br>
 							<h4 class="card-text">CARRIER</h4>
-							<h2 class="card-title"><b><%= bookingDetail.airline %></b></h2>
+							<h2 class="card-title"><b><%= flight.airline %></b></h2>
 							<br>
 							<br>
 							<h4 class="card-text">DATE</h4>
-							<h2 class="card-title"><b><%= bookingDetail.date %></b></h2>
+							<h2 class="card-title"><b><%= flight.departureTime ? new Date(flight.departureTime).toLocaleDateString() : 'N/A' %></b></h2>
 						</div>
 						<div class="col">
 							<br>
@@ -51,7 +51,7 @@
 							<br>
 							<br>
 							<h4 class="card-text">TIME</h4>
-							<h2 class="card-title"><b><%= bookingDetail.fromTime %></b></h2>
+							<h2 class="card-title"><b><%= flight.departureTime ? new Date(flight.departureTime).toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'}) : 'N/A' %></b></h2>
 						</div>
 					</div>
 				</div>

@@ -1,102 +1,72 @@
-if (process.env.NODE_ENV !== "PRODUCTION") {
-    require("dotenv").config();
-}
-
-const express = require("express"),
-    mongoose = require("mongoose"),
-    ejsMate = require("ejs-mate"),
-    path = require("path"),
-    session = require("express-session"),
-    flash = require("connect-flash"),
-    passport = require("passport"),
-    LocalStrategy = require("passport-local"),
-    mongoSanitize = require("express-mongo-sanitize"),
-    helmet = require("helmet"),
-    MongoStore = require("connect-mongo");
-
+require("dotenv").config();
+const express = require("express");
+const mongoose = require("mongoose");
+const app = express();
+const session = require("express-session");
+const flash = require("connect-flash");
+const methodOverride = require("method-override");
+const path = require("path");
+const ejsMate = require("ejs-mate");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
 const User = require("./models/user");
+
+// MongoDB Connection
+mongoose.connect("mongodb://127.0.0.1:27017/flightDB")
+.then(() => {
+    console.log("✅ MongoDB connected successfully");
+})
+.catch(err => {
+    console.error("❌ MongoDB connection error:", err);
+});
 
 const flightRoutes = require("./routes/flight");
 const authRoutes = require("./routes/auth");
-const trainRoutes = require("./routes/trains"); // ✅ Require here
-
-const dbUrl = process.env.dbURL || "mongodb://localhost:27017/flightDB";
-mongoose.connect(dbUrl, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
-
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "Connection Error:"));
-db.once("open", () => {
-    console.log("Database Connected");
-});
-
-const app = express(); // ✅ moved above any `app.use`
 
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
+app.use(express.static(path.join(__dirname, "public")));
 
-const store = MongoStore.create({
-    mongoUrl: dbUrl,
-    touchAfter: 24 * 60 * 60
-});
-store.on("error", function (err) {
-    console.log("Session Store Error", err);
-});
-
-const sessionConfig = {
-    store,
-    name: "sesh",
-    secret: process.env.seshSECRET,
+app.use(session({
+    secret: process.env.seshSECRET || "fallback_secret",
     resave: false,
-    saveUninitialized: true,
-    cookie: {
-        httpOnly: true,
-        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-        maxAge: 1000 * 60 * 60 * 24 * 7
-    }
-}
-app.use(session(sessionConfig));
+    saveUninitialized: true
+}));
 
-app.use(mongoSanitize());
 app.use(flash());
-app.use(helmet({ contentSecurityPolicy: false }));
 
+// Passport Configuration
 app.use(passport.initialize());
 app.use(passport.session());
-
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
-    if (req.originalUrl !== "/login") req.session.returnTo = req.originalUrl;
-    res.locals.currentUser = req.user;
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
+    res.locals.currentUser = req.user;
+    // Add helper functions to res.locals
+    const { getCity } = require("./utils/helperFunctions");
+    res.locals.getCity = getCity;
     next();
 });
 
+// Mount routes
 app.use("/", flightRoutes);
 app.use("/", authRoutes);
-app.use("/trains", trainRoutes); // ✅ Mounted here after `app` is initialized
 
-app.all("*", (req, res, next) => {
-    res.redirect("/");
+// 404 page
+app.all("*", (req, res) => {
+    res.status(404).send("Page Not Found");
 });
 
-app.use((err, req, res, next) => {
-    console.log(err.message);
-    req.flash("error", "Oh No, Something Went Wrong!");
-    res.redirect("/");
-});
-
+// Start server
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-    console.log(`Server live at http://localhost:${port}`);
+    console.log(`Server running on port ${port}`);
 });

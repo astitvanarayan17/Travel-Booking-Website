@@ -1,7 +1,8 @@
 <% layout("layouts/boilerplate") %>
 
-<% for (let index = 0; index < bookingDetail.passengers.length; index++) { %>
-    <form action="/cancel/<%= bookingDetail._id %>/<%= index %>" method="post">
+<% for (let index = 0; index < bookings.length; index++) { %>
+    <% let bookingDetail = bookings[index]; %>
+    <form action="/cancel/<%= index %>" method="post">
 	<div>
 		<div class="card text-dark bg-light details-card">
 			<div class="card-body">
@@ -24,7 +25,7 @@
 						<div class="col">
 							<br>
 							<h4 class="card-text">Name</h4>
-							<h2 class="card-title"><b><%= bookingDetail.passengers[index] %></b></h2>
+							<h2 class="card-title"><b><%= bookingDetail.passengers && bookingDetail.passengers.length > 0 ? bookingDetail.passengers[0].name : 'N/A' %></b></h2>
 							<br>
 							<br>
 							<h4 class="card-text">CARRIER</h4>
@@ -45,21 +46,21 @@
 							<br>
 							<br>
 							<h4 class="card-text">DATE</h4>
-							<h2 class="card-title"><b><%= bookingDetail.date %></b></h2>
+							<h2 class="card-title"><b><%= bookingDetail.departureTime ? new Date(bookingDetail.departureTime).toLocaleDateString() : 'N/A' %></b></h2>
 						</div>
 						<div class="col">
 							<br>
 							<h4 class="card-text">FROM TIME</h4>
-							<h2 class="card-title"><b><%= bookingDetail.fromTime %></b></h2>
+							<h2 class="card-title"><b><%= bookingDetail.departureTime ? new Date(bookingDetail.departureTime).toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'}) : 'N/A' %></b></h2>
 							<br>
 							<br>
 							<h4 class="card-text">TO TIME</h4>
-							<h2 class="card-title"><b><%= bookingDetail.toTime %></b></h2>
+							<h2 class="card-title"><b><%= bookingDetail.arrivalTime ? new Date(bookingDetail.arrivalTime).toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'}) : 'N/A' %></b></h2>
 							<br>
 							<br>
 							<h4 class="card-text" style="color: #ff4646;"><b>Enter Password</b></h4>
                             <input type="password" class="password-input" name="password" required>
-                            <input type="hidden" name="username" value="<%= currentUser.username %>">
+                            <input type="hidden" name="username" value="<%= currentUser ? currentUser.email : '' %>">
 						</div>
 					</div>
 				</div>
