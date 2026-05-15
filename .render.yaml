@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: travel-booking-website
+    env: node
+    plan: free
+    region: oregon
+    branch: main
+    buildCommand: npm install
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production

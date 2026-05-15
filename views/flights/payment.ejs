@@ -1,0 +1,380 @@
+<% layout("layouts/boilerplate") %>
+<link rel="stylesheet" href="/stylesheets/traveller-styles.css">
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Main Form Section -->
+        <div class="col-12 col-lg-8">
+            <div class="form-container">
+                <div class="form-header">
+                    <h1>Payment Details</h1>
+                    <p class="text-muted">Complete your booking by providing payment information</p>
+                </div>
+
+                <form action="/payment" method="post" id="paymentForm">
+                    <!-- Payment Method Selection -->
+                    <div class="form-section">
+                        <h3>Select Payment Method</h3>
+                        <div class="payment-methods">
+                            <div class="payment-method">
+                                <input type="radio" id="card" name="paymentMethod" value="card" checked required>
+                                <label for="card">
+                                    <i class="fas fa-credit-card"></i>
+                                    <span>Credit / Debit Card</span>
+                                </label>
+                            </div>
+                            <div class="payment-method">
+                                <input type="radio" id="upi" name="paymentMethod" value="upi" required>
+                                <label for="upi">
+                                    <i class="fas fa-qrcode"></i>
+                                    <span>UPI</span>
+                                </label>
+                            </div>
+                            <div class="payment-method">
+                                <input type="radio" id="wallet" name="paymentMethod" value="wallet" required>
+                                <label for="wallet">
+                                    <i class="fas fa-wallet"></i>
+                                    <span>Digital Wallet</span>
+                                </label>
+                            </div>
+                            <div class="payment-method">
+                                <input type="radio" id="netbanking" name="paymentMethod" value="netbanking" required>
+                                <label for="netbanking">
+                                    <i class="fas fa-university"></i>
+                                    <span>Net Banking</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Payment Form -->
+                    <div id="cardPayment" class="payment-form-section">
+                        <h3>Card Details</h3>
+                        
+                        <div class="form-group">
+                            <label for="cardName">Cardholder Name</label>
+                            <input type="text" id="cardName" name="cardName" class="form-control" placeholder="Enter name as shown on card">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cardNumber">Card Number</label>
+                            <input type="text" id="cardNumber" name="cardNumber" class="form-control" placeholder="1234 5678 9012 3456" 
+                                   pattern="[0-9\s]{16,}" maxlength="20">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="expiryMonth">Expiry Date</label>
+                                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                        <input type="number" name="expiryMonth" class="form-control" placeholder="MM" min="1" max="12" style="flex: 0.5;">
+                                        <span style="font-weight: 600;">/</span>
+                                        <input type="number" name="expiryYear" class="form-control" placeholder="YY" min="25" style="flex: 0.5;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="cvv">CVV</label>
+                                    <input type="password" id="cvv" name="cvv" class="form-control" placeholder="***" maxlength="4">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- UPI Payment Form -->
+                    <div id="upiPayment" class="payment-form-section" style="display: none;">
+                        <h3>UPI Payment</h3>
+                        <div class="form-group">
+                            <label for="upiId">UPI ID</label>
+                            <input type="text" id="upiId" name="upiId" class="form-control" placeholder="yourname@upi">
+                        </div>
+                        <p class="text-muted small" style="margin-top: 1rem;">
+                            <i class="fas fa-info-circle"></i> You will be redirected to your UPI app to complete the payment.
+                        </p>
+                    </div>
+
+                    <!-- Wallet Payment Form -->
+                    <div id="walletPayment" class="payment-form-section" style="display: none;">
+                        <h3>Digital Wallet</h3>
+                        <div class="wallet-options">
+                            <div class="wallet-option">
+                                <input type="radio" id="googlePay" name="wallet" value="googlepay">
+                                <label for="googlePay">Google Pay</label>
+                            </div>
+                            <div class="wallet-option">
+                                <input type="radio" id="phonePe" name="wallet" value="phonepe">
+                                <label for="phonePe">PhonePe</label>
+                            </div>
+                            <div class="wallet-option">
+                                <input type="radio" id="paytm" name="wallet" value="paytm">
+                                <label for="paytm">Paytm</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Net Banking Form -->
+                    <div id="netBankingPayment" class="payment-form-section" style="display: none;">
+                        <h3>Select Your Bank</h3>
+                        <div class="form-group">
+                            <select name="bank" class="form-control">
+                                <option value="">-- Select a Bank --</option>
+                                <option value="sbi">State Bank of India (SBI)</option>
+                                <option value="hdfc">HDFC Bank</option>
+                                <option value="icici">ICICI Bank</option>
+                                <option value="axis">Axis Bank</option>
+                                <option value="boi">Bank of India</option>
+                                <option value="pnb">Punjab National Bank</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Billing Address -->
+                    <div class="form-section">
+                        <h3>Billing Details</h3>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="your@email.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="form-control" placeholder="+91 98765 43210">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" id="address" name="address" class="form-control" placeholder="Enter your address">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <input type="text" id="city" name="city" class="form-control" placeholder="Enter city">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pincode">Pincode</label>
+                                    <input type="text" id="pincode" name="pincode" class="form-control" placeholder="000000">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Terms & Conditions -->
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input type="checkbox" id="terms" name="terms" class="form-check-input" required>
+                            <label class="form-check-label" for="terms">
+                                I agree to the booking terms and conditions
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <a href="/traveller" class="btn btn-outline">
+                            <i class="fas fa-arrow-left btn-icon"></i> Back
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-lock btn-icon"></i> Complete Payment
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="booking-sidebar">
+            <!-- Progress -->
+            <div class="fare-summary">
+                <div class="progress" style="height: 6px; background: #e2e8f0; border-radius: 3px; margin-bottom: 1.5rem;">
+                    <div class="progress-bar" role="progressbar" style="width: 100%; background: #2563eb;" 
+                         aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                    <span style="font-size: 0.875rem; color: #64748b;">Step 4 of 4</span>
+                    <span style="font-size: 0.875rem; font-weight: 600;">Payment</span>
+                </div>
+                <hr>
+
+                <!-- Flight Summary -->
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="font-size: 0.9375rem; font-weight: 600; color: #0f172a; margin-bottom: 0.75rem;">
+                        Flight Summary
+                    </h4>
+                    <div style="display: grid; gap: 0.5rem; font-size: 0.875rem; color: #475569;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span><i class="fas fa-plane"></i> <%= detail.from %> → <%= detail.to %></span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span><i class="fas fa-building"></i> <%= detail.airline %></span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span><i class="fas fa-clock"></i> <%= detail.fromTime %> - <%= detail.toTime %></span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span><i class="fas fa-users"></i> <%= detail.passengerCount %> Traveller<%= detail.passengerCount > 1 ? 's' : '' %></span>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- Fare Summary -->
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="font-size: 0.9375rem; font-weight: 600; color: #0f172a; margin-bottom: 0.75rem;">
+                        Fare Summary
+                    </h4>
+                    <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0; font-size: 0.875rem;">
+                        <span>Base Fare</span>
+                        <span>₹<%= detail.price - 489 %></span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0; font-size: 0.875rem;">
+                        <span>Fee & Taxes</span>
+                        <span>₹489</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 1rem 0; font-size: 1.125rem; font-weight: 600;">
+                        <span>Total Amount</span>
+                        <span style="color: #2563eb;">₹<%= detail.price %></span>
+                    </div>
+                </div>
+
+                <!-- Security Notice -->
+                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 1rem; font-size: 0.85rem; color: #166534; text-align: center;">
+                    <i class="fas fa-shield-alt" style="margin-right: 0.5rem;"></i>
+                    <strong>Secure Payment</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .payment-methods {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .payment-method input[type="radio"] {
+        display: none;
+    }
+
+    .payment-method label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem 1rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-align: center;
+        gap: 0.5rem;
+    }
+
+    .payment-method label i {
+        font-size: 1.5rem;
+        color: #64748b;
+    }
+
+    .payment-method label span {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: #475569;
+    }
+
+    .payment-method input[type="radio"]:checked + label {
+        border-color: #2563eb;
+        background-color: #eff6ff;
+    }
+
+    .payment-method input[type="radio"]:checked + label i {
+        color: #2563eb;
+    }
+
+    .payment-method input[type="radio"]:checked + label span {
+        color: #0f172a;
+        font-weight: 600;
+    }
+
+    .payment-form-section {
+        background: #f8fafc;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        border: 1px solid #e2e8f0;
+    }
+
+    .payment-form-section h3 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #0f172a;
+        margin-bottom: 1rem;
+    }
+
+    .wallet-options {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+
+    .wallet-option input[type="radio"] {
+        display: none;
+    }
+
+    .wallet-option label {
+        padding: 1rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-align: center;
+        font-weight: 500;
+        color: #475569;
+    }
+
+    .wallet-option input[type="radio"]:checked + label {
+        border-color: #2563eb;
+        background-color: #eff6ff;
+        color: #0f172a;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .form-actions .btn {
+        flex: 1;
+    }
+
+    @media (max-width: 768px) {
+        .payment-methods {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .wallet-options {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<script>
+    // Switch between payment method forms
+    document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            document.getElementById('cardPayment').style.display = this.value === 'card' ? 'block' : 'none';
+            document.getElementById('upiPayment').style.display = this.value === 'upi' ? 'block' : 'none';
+            document.getElementById('walletPayment').style.display = this.value === 'wallet' ? 'block' : 'none';
+            document.getElementById('netBankingPayment').style.display = this.value === 'netbanking' ? 'block' : 'none';
+        });
+    });
+</script>

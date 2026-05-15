@@ -21,18 +21,26 @@ router.route("/review")
 
 router.route("/traveller")
     .get(flight.renderTravellerForm)
-    .post(isLoggedIn, catchAsync(flight.bookTicket)); 
+    .post(isLoggedIn, flight.bookTicket);
+
+router.route("/payment")
+    .get(isLoggedIn, flight.renderPayment)
+    .post(isLoggedIn, flight.processPayment);
 
 router.route("/bookings")
-    .get(isLoggedIn, catchAsync(flight.showBookings));
+    .get(isLoggedIn, flight.showBookings);
 
 router.route("/boarding-pass/:id")
-    .get(validateBookingId, catchAsync(flight.showBoardingPass));
+    .get(validateBookingId, flight.showBoardingPass);
 
 router.route("/cancel/:id")
-    .get(isLoggedIn, validateBookingId, catchAsync(flight.renderCancel));
+    .get(isLoggedIn, validateBookingId, flight.renderCancel);
 
 router.route("/cancel/:id")
-    .post(isLoggedIn, validateBookingId, catchAsync(flight.deleteBookings));
+    .post(isLoggedIn, validateBookingId, flight.deleteBookings);
+
+// API Health Check endpoint
+router.route("/api/health")
+    .get(flight.apiHealthCheck);
 
 module.exports = router;

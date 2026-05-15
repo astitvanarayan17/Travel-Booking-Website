@@ -7,6 +7,22 @@
 %>
 
 <div class="container mt-5">
+    <!-- API Status Notice -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-12">
+            <div class="alert alert-info" role="alert">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <div>
+                        <strong>Flight Search Service:</strong> 
+                        This system uses Mock flight data.
+                        If you experience issues, please try again later or contact support.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row justify-content-center">
         <div class="col-12">
             <form action="/" method="post" class="bg-white p-4 rounded-3 shadow-sm">
@@ -76,6 +92,26 @@
 </div>
 
 <script src="/scripts/datePicker.js"></script>
+
+<script>
+// Prevent double form submissions
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const submitButton = form.querySelector('button[type="submit"]');
+    
+    form.addEventListener('submit', function(e) {
+        // Disable the submit button to prevent double submission
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Searching...';
+        
+        // Re-enable after 5 seconds in case of error
+        setTimeout(() => {
+            submitButton.disabled = false;
+            submitButton.innerHTML = '<i class="fas fa-search me-2"></i>Search';
+        }, 5000);
+    });
+});
+</script>
 
 <!-- About Us Section -->
 <style>

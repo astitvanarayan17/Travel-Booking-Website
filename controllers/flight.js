@@ -1,5 +1,4 @@
 require("dotenv").config();
-const axios = require("axios");
 const mongoose = require("mongoose");
 
 // Home or main flights page
@@ -26,126 +25,127 @@ module.exports.index = async (req, res) => {
 // Renders the search form
 module.exports.renderSearch = (req, res) => {
     const details = req.session.details || [];
-    res.render("flights/search", { details });
+    const { sortby } = req.query;
+    
+    // Apply sorting if requested
+    if (sortby && details.length > 0) {
+        const { sorting } = require("../utils/helperFunctions");
+        const sortedDetails = sorting([...details], sortby);
+        req.session.details = sortedDetails;
+    }
+    
+    res.render("flights/search", { details: req.session.details || details });
 };
 
-// Calls the Aviation API and shows flights
-module.exports.findFlights = async (req, res) => {
+// Generate mock flight data instead of calling API
+module.exports.findFlights = (req, res) => {
     const { from, to, date, passengerCount, group } = req.body;
 
+    // Validate required fields
+    if (!from || !to || !date || !passengerCount || !group) {
+        req.flash("error", "Please fill in all required fields.");
+        return res.redirect("/");
+    }
+
+    console.log("=== Flight Search Request ===");
+    console.log("From:", from);
+    console.log("To:", to);
+    console.log("Date:", date);
+    console.log("Passengers:", passengerCount);
+    console.log("Class:", group);
+
     try {
-        // Check if API key is available
-        if (!process.env.AVIATION_API_KEY || process.env.AVIATION_API_KEY === 'your_aviation_api_key_here') {
-            console.log("No valid API key found, using fallback data");
-            return await generateFallbackFlights(req, res, { from, to, date, passengerCount, group });
+        // Generate mock flight data
+        const airlines = [
+            { name: "Air India", code: "AI" },
+            { name: "IndiGo", code: "6E" },
+            { name: "Vistara", code: "UK" },
+            { name: "SpiceJet", code: "SG" },
+            { name: "GoAir", code: "G8" }
+        ];
+
+        const priceRanges = {
+            Economy: { min: 3000, max: 8000 },
+            Premium: { min: 8000, max: 15000 }
+        };
+
+        const baseDate = new Date(date + 'T00:00:00');
+        const details = [];
+
+        // Generate 5 mock flights
+        for (let i = 0; i < 5; i++) {
+            const airline = airlines[i % airlines.length];
+            const startHour = 6 + (i * 3); // Flights starting from 6 AM, spaced 3 hours apart
+            const duration = 2 + Math.random(); // 2-3 hours
+            
+            const departTime = new Date(baseDate);
+            departTime.setHours(startHour, Math.floor(Math.random() * 60), 0);
+            
+            const arriveTime = new Date(departTime);
+            arriveTime.setHours(arriveTime.getHours() + Math.floor(duration));
+            arriveTime.setMinutes(arriveTime.getMinutes() + Math.floor((duration % 1) * 60));
+
+            const durationHours = Math.floor(duration);
+            const durationMinutes = Math.floor((duration % 1) * 60);
+            const durationStr = `${durationHours}h ${durationMinutes}m`;
+
+            const fromTime = departTime.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            });
+
+            const toTime = arriveTime.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            });
+
+            const priceRange = priceRanges[group];
+            const price = Math.floor(Math.random() * (priceRange.max - priceRange.min + 1)) + priceRange.min;
+
+            details.push({
+                from: from.toUpperCase(),
+                to: to.toUpperCase(),
+                departureTime: departTime.toISOString(),
+                arrivalTime: arriveTime.toISOString(),
+                fromTime: fromTime,
+                toTime: toTime,
+                airline: airline.name,
+                flightNo: `${airline.code}${100 + i}`,
+                flightNumber: `${airline.code}${1000 + i}`,
+                terminal: `${1 + i}`,
+                gate: `${String.fromCharCode(65 + i)}${1 + i}`,
+                duration: durationStr,
+                passengerCount: parseInt(passengerCount),
+                group: group,
+                passengers: [],
+                price: price,
+                date: date
+            });
         }
 
-        const response = await axios.get("http://api.aviationstack.com/v1/flights", {
-            params: {
-                access_key: process.env.AVIATION_API_KEY,
-                dep_iata: from.toUpperCase(),
-                arr_iata: to.toUpperCase(),
-                flight_date: date
-            }
-        });
-
-        console.log("API Key used:", process.env.AVIATION_API_KEY ? "Key provided" : "No key");
-        console.log("Flight API response status:", response.status);
-
-        const apiData = response.data.data;
-
-        if (!apiData || apiData.length === 0) {
-            console.log("No API data found, using fallback");
-            return await generateFallbackFlights(req, res, { from, to, date, passengerCount, group });
-        }
-
-        const details = apiData.slice(0, 10).map(flight => ({
-            from: flight.departure.iata,
-            to: flight.arrival.iata,
-            departureTime: flight.departure.scheduled,
-            arrivalTime: flight.arrival.scheduled,
-            airline: flight.airline.name,
-            flightNo: flight.flight.iata,
-            terminal: flight.departure.terminal || "N/A",
-            gate: flight.departure.gate || "N/A",
-            duration: "N/A",
-            passengerCount: parseInt(passengerCount),
-            group: group,
-            passengers: [],
-            price: Math.floor(Math.random() * 5000 + 2500)
-        }));
-
+        console.log("Generated mock flights:", details.length);
         req.session.details = details;
         res.redirect("/search");
 
     } catch (err) {
-        console.error("API fetch error:", err.message);
-        console.error("Error status:", err.response?.status);
-        console.error("Error data:", err.response?.data);
-        
-        // If API fails, use fallback data
-        if (err.response?.status === 403 || err.response?.status === 401) {
-            console.log("API authentication failed, using fallback data");
-            return await generateFallbackFlights(req, res, { from, to, date, passengerCount, group });
-        }
-        
-        req.flash("error", "Unable to fetch flights. Using sample data instead.");
-        return await generateFallbackFlights(req, res, { from, to, date, passengerCount, group });
+        console.error("Error generating flights:", err.message);
+        req.flash("error", "Unable to fetch flights. Please try again later.");
+        return res.redirect("/");
     }
 };
-
-// Fallback function to generate sample flight data
-async function generateFallbackFlights(req, res, { from, to, date, passengerCount, group }) {
-    const { generateDetails } = require("../utils/helperFunctions");
-    
-    try {
-        // Generate sample flight details
-        const details = generateDetails(from, to, date, passengerCount, group);
-        
-        // Convert to the expected format
-        const formattedDetails = details.map(detail => {
-            // Parse the date properly (assuming format DD.MM.YYYY from the form)
-            const [day, month, year] = date.split('.');
-            const departureDate = new Date(year, month - 1, day);
-            
-            // Add time to the date
-            const [depHours, depMins] = detail.fromTime.split(':');
-            const [arrHours, arrMins] = detail.toTime.split(':');
-            
-            departureDate.setHours(parseInt(depHours), parseInt(depMins));
-            const arrivalDate = new Date(departureDate);
-            arrivalDate.setHours(parseInt(arrHours), parseInt(arrMins));
-            
-            return {
-                from: detail.from,
-                to: detail.to,
-                departureTime: departureDate.toISOString(),
-                arrivalTime: arrivalDate.toISOString(),
-                airline: detail.airline,
-                flightNo: `${detail.airline.substring(0, 2)}${Math.floor(Math.random() * 9999)}`,
-                terminal: Math.floor(Math.random() * 5) + 1,
-                gate: String.fromCharCode(65 + Math.floor(Math.random() * 26)) + Math.floor(Math.random() * 50),
-                duration: detail.duration,
-                passengerCount: parseInt(passengerCount),
-                group: group,
-                passengers: [],
-                price: detail.price
-            };
-        });
-
-        req.session.details = formattedDetails;
-        req.flash("success", "Sample flight data loaded successfully!");
-        res.redirect("/search");
-    } catch (error) {
-        console.error("Fallback generation error:", error);
-        req.flash("error", "Unable to generate flight data. Please try again.");
-        res.redirect("/");
-    }
-}
 
 // Stores selected flight details into session
 module.exports.storeFlightDetails = (req, res) => {
     const { index } = req.body;
+    
+    // Check if session has details
+    if (!req.session.details || !req.session.details[index]) {
+        req.flash("error", "Flight data not found. Please search again.");
+        return res.redirect("/");
+    }
+    
     const flightDetails = req.session.details[index];
     req.session.selectedFlight = flightDetails;
     res.redirect("/review");
@@ -154,22 +154,31 @@ module.exports.storeFlightDetails = (req, res) => {
 // Shows the review page
 module.exports.renderReview = (req, res) => {
     const flight = req.session.selectedFlight;
-    res.render("flights/review", { flight });
+    if (!flight) {
+        req.flash("error", "Please select a flight first.");
+        return res.redirect("/");
+    }
+    res.render("flights/review", { detail: flight });
 };
 
 // Shows the form to enter passenger details
 module.exports.renderTravellerForm = (req, res) => {
     const flight = req.session.selectedFlight;
-    res.render("flights/traveller", { flight });
+    if (!flight) {
+        req.flash("error", "Please select a flight first.");
+        return res.redirect("/");
+    }
+    res.render("flights/traveller", { detail: flight });
 };
 
-// Book the ticket (save booking info)
+// Book the ticket (save passenger info and redirect to payment)
 module.exports.bookTicket = (req, res) => {
     const { name, email, age, gender } = req.body;
     const flight = req.session.selectedFlight;
 
-    if (!req.session.bookings) {
-        req.session.bookings = [];
+    if (!flight) {
+        req.flash("error", "Flight data not found. Please select a flight again.");
+        return res.redirect("/");
     }
 
     const passengers = Array.isArray(name)
@@ -182,7 +191,77 @@ module.exports.bookTicket = (req, res) => {
         : [{ name, email, age, gender }];
 
     flight.passengers = passengers;
+    req.session.selectedFlight = flight;
+    res.redirect("/payment");
+};
+
+// Show payment page
+module.exports.renderPayment = (req, res) => {
+    const flight = req.session.selectedFlight;
+    if (!flight) {
+        req.flash("error", "Flight data not found. Please select a flight again.");
+        return res.redirect("/");
+    }
+    res.render("flights/payment", { detail: flight });
+};
+
+// Process payment and complete booking
+module.exports.processPayment = (req, res) => {
+    const { paymentMethod, terms } = req.body;
+    const flight = req.session.selectedFlight;
+
+    if (!flight) {
+        req.flash("error", "Flight data not found. Please start over.");
+        return res.redirect("/");
+    }
+
+    if (!terms) {
+        req.flash("error", "Please agree to the terms and conditions.");
+        return res.redirect("/payment");
+    }
+
+    // Validate payment data
+    if (paymentMethod === 'card') {
+        const { cardNumber, cvv } = req.body;
+        if (!cardNumber || !cvv) {
+            req.flash("error", "Please fill in all card details.");
+            return res.redirect("/payment");
+        }
+    } else if (paymentMethod === 'upi') {
+        const { upiId } = req.body;
+        if (!upiId) {
+            req.flash("error", "Please enter your UPI ID.");
+            return res.redirect("/payment");
+        }
+    } else if (paymentMethod === 'wallet') {
+        const { wallet } = req.body;
+        if (!wallet) {
+            req.flash("error", "Please select a wallet.");
+            return res.redirect("/payment");
+        }
+    } else if (paymentMethod === 'netbanking') {
+        const { bank } = req.body;
+        if (!bank) {
+            req.flash("error", "Please select a bank.");
+            return res.redirect("/payment");
+        }
+    }
+
+    // Add payment method and email to flight
+    flight.paymentMethod = paymentMethod;
+    flight.billingEmail = req.body.email;
+
+    // Add booking to bookings array
+    if (!req.session.bookings) {
+        req.session.bookings = [];
+    }
+
     req.session.bookings.push(flight);
+
+    // Clear session data
+    req.session.selectedFlight = null;
+
+    req.flash("success", "✅ Payment successful! Your flight is booked.");
     res.redirect("/bookings");
 };
 
@@ -212,4 +291,13 @@ module.exports.deleteBookings = (req, res) => {
         req.session.bookings.splice(id, 1);
     }
     res.redirect("/bookings");
+};
+
+// API Health Check (removed - no longer using external API)
+module.exports.apiHealthCheck = (req, res) => {
+    return res.json({ 
+        status: 'healthy', 
+        message: 'Using mock flight data - no external API required',
+        timestamp: new Date().toISOString()
+    });
 };

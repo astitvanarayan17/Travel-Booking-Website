@@ -7,84 +7,104 @@
     <div class="row justify-content-center">
         <div class="col-12 col-lg-10 col-xl-8">
             
-            <div class="search-header mb-4">
-                <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
-                    <div>
-                        <h2 class="mb-1"><%= details[0].from %> <i class="fas fa-arrow-right mx-2 text-muted"></i> <%= details[0].to %></h2>
-                        <p class="text-muted mb-0"><%= new Date(details[0].date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %> • 
-                        <%= details[0].passengerCount %> <%= details[0].passengerCount > 1 ? 'Travellers' : 'Traveller' %> • <%= details[0].group %></p>
-                    </div>
-                    <div class="d-flex align-items-center mt-2 mt-md-0">
-                        <a href="/" class="btn btn-outline-secondary me-2">
-                            <i class="fas fa-arrow-left me-1"></i> Back
-                        </a>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-sort me-1"></i> Sort
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="/search?sortby=price"><i class="fas fa-money-bill-wave me-2"></i>Price (Low to High)</a></li>
-                                <li><a class="dropdown-item" href="/search?sortby=duration"><i class="far fa-clock me-2"></i>Duration (Shortest)</a></li>
-                                <li><a class="dropdown-item" href="/search?sortby=ao"><i class="fas fa-sort-alpha-down me-2"></i>Alphabetical (A-Z)</a></li>
-                            </ul>
+            <% if (details && details.length > 0) { %>
+                <div class="search-header mb-4">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+                        <div>
+                            <h2 class="mb-1"><%= details[0].from %> <i class="fas fa-arrow-right mx-2 text-muted"></i> <%= details[0].to %></h2>
+                            <p class="text-muted mb-0">
+                                <%= new Date(details[0].date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %> • 
+                                <%= details[0].passengerCount %> <%= details[0].passengerCount > 1 ? 'Travellers' : 'Traveller' %> • <%= details[0].group %>
+                            </p>
                         </div>
-                    </div>
-                </div>
-                <div class="progress" style="height: 4px;">
-                    <div class="progress-bar bg-primary" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-            </div>
-
-            <% for (let detail of details) { %> 
-                <form action="/search" method="post">		
-                    <div class="card flight-card mb-4">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <div class="d-flex align-items-center">
-                                    <img src="<%= detail.airlineLogo || '/images/airline-placeholder.png' %>" alt="<%= detail.airline %>" class="airline-logo">
-                                    <div>
-                                        <h5 class="mb-0 fw-bold"><%= detail.airline %></h5>
-                                        <small class="text-muted">Flight #<%= detail.flightNumber || '--' %></small>
-                                    </div>
-                                </div>
-                                <div class="price">
-                                    <div class="price-amount">₹<%= detail.price - 489 %></div>
-                                    <small class="text-muted">per person</small>
-                                </div>
-                            </div>
-                            
-                            <div class="flight-timings position-relative">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="text-center">
-                                        <div class="h4 mb-1"><%= detail.fromTime %></div>
-                                        <div class="text-muted"><%= detail.from %></div>
-                                    </div>
-                                    
-                                    <div class="plane-icon">
-                                        <i class="fas fa-plane"></i>
-                                    </div>
-                                    
-                                    <div class="text-center">
-                                        <div class="h4 mb-1"><%= detail.toTime %></div>
-                                        <div class="text-muted"><%= detail.to %></div>
-                                    </div>
-                                </div>
-                                <div class="duration"><%= detail.duration || '2h 30m' %></div>
-                                <div class="stops">Non-stop</div>
-                            </div>
-                            
-                            <div class="d-flex justify-content-between align-items-center mt-4">
-                                <div class="text-muted">
-                                    <i class="fas fa-suitcase me-1"></i> 23kg Check-in • 7kg Cabin
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-book">
-                                    <i class="fas fa-ticket-alt me-2"></i>Book Now
+                        <div class="d-flex align-items-center mt-2 mt-md-0">
+                            <a href="/" class="btn btn-outline-secondary me-2">
+                                <i class="fas fa-arrow-left me-1"></i> Back
+                            </a>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-sort me-1"></i> Sort
                                 </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="/search?sortby=price"><i class="fas fa-money-bill-wave me-2"></i>Price (Low to High)</a></li>
+                                    <li><a class="dropdown-item" href="/search?sortby=duration"><i class="far fa-clock me-2"></i>Duration (Shortest)</a></li>
+                                    <li><a class="dropdown-item" href="/search?sortby=ao"><i class="fas fa-sort-alpha-down me-2"></i>Alphabetical (A-Z)</a></li>
+                                </ul>
                             </div>
                         </div>
-                        <input type="hidden" name="detail" value="<%= JSON.stringify(detail) %>" />
                     </div>
-                </form>
+                    <div class="progress" style="height: 4px;">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+
+                <% for (let i = 0; i < details.length; i++) { %> 
+                    <% let detail = details[i]; %>
+                    <form action="/search" method="post">		
+                        <div class="card flight-card mb-4">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="d-flex align-items-center">
+                                        <img src="<%= detail.airlineLogo || '/images/airline-placeholder.png' %>" alt="<%= detail.airline %>" class="airline-logo">
+                                        <div>
+                                            <h5 class="mb-0 fw-bold"><%= detail.airline %></h5>
+                                            <small class="text-muted">Flight #<%= detail.flightNumber || detail.flightNo || '--' %></small>
+                                        </div>
+                                    </div>
+                                    <div class="price">
+                                        <div class="price-amount">₹<%= detail.price - 489 %></div>
+                                        <small class="text-muted">per person</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="flight-timings position-relative">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="text-center">
+                                            <div class="h4 mb-1"><%= detail.fromTime || '--' %></div>
+                                            <div class="text-muted"><%= detail.from %></div>
+                                        </div>
+                                        
+                                        <div class="plane-icon">
+                                            <i class="fas fa-plane"></i>
+                                        </div>
+                                        
+                                        <div class="text-center">
+                                            <div class="h4 mb-1"><%= detail.toTime || '--' %></div>
+                                            <div class="text-muted"><%= detail.to %></div>
+                                        </div>
+                                    </div>
+                                    <div class="duration"><%= detail.duration || '2h 30m' %></div>
+                                    <div class="stops">Non-stop</div>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between align-items-center mt-4">
+                                    <div class="text-muted">
+                                        <i class="fas fa-suitcase me-1"></i> 23kg Check-in • 7kg Cabin
+                                        <% if (detail.terminal && detail.terminal !== 'N/A') { %>
+                                            • Terminal <%= detail.terminal %>
+                                        <% } %>
+                                        <% if (detail.gate && detail.gate !== 'N/A') { %>
+                                            • Gate <%= detail.gate %>
+                                        <% } %>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-book">
+                                        <i class="fas fa-ticket-alt me-2"></i>Book Now
+                                    </button>
+                                </div>
+                            </div>
+                            <input type="hidden" name="index" value="<%= i %>" />
+                        </div>
+                    </form>
+                <% } %>
+            <% } else { %>
+                <div class="text-center py-5">
+                    <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                    <h3 class="text-muted">No flights found</h3>
+                    <p class="text-muted">Try adjusting your search criteria or check back later.</p>
+                    <a href="/" class="btn btn-primary">
+                        <i class="fas fa-arrow-left me-2"></i>Search Again
+                    </a>
+                </div>
             <% } %>
             
         </div>
