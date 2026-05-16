@@ -9,7 +9,7 @@ const path = require("path");
 const ejsMate = require("ejs-mate");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
-const User = require("./models/user");
+const User = require("./models/User");
 
 // MongoDB Connection
 mongoose.connect(process.env.dbURL)
