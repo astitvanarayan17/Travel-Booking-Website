@@ -1,26 +1,29 @@
 require("dotenv").config();
-const mongoose = require("mongoose");
 
 // Home or main flights page
-const Airport = require("../models/airport"); // make sure this model exists
+const Airport = require("../models/airport");
 
 module.exports.index = async (req, res) => {
     try {
-        // Check if MongoDB is connected
-        if (mongoose.connection.readyState !== 1) {
-            throw new Error("Database not connected");
-        }
-        
+
+        // Fetch airports directly
         const airports = await Airport.find({});
+
         res.render("flights/index", { airports });
+
     } catch (err) {
+
         console.error("Error loading airports:", err);
-        req.flash("error", "Unable to load airports. Please try again later.");
-        // Render the page with empty airports array instead of redirecting
+
+        req.flash(
+            "error",
+            "Unable to load airports. Please try again later."
+        );
+
+        // Render empty airports array if error occurs
         res.render("flights/index", { airports: [] });
     }
 };
-
 
 // Renders the search form
 module.exports.renderSearch = (req, res) => {
