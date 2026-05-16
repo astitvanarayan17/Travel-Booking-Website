@@ -12,8 +12,7 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 
 // MongoDB Connection
-const dbUrl = process.env.dbURL || process.env.MONGO_URI || "mongodb://127.0.0.1:27017/flightDB";
-mongoose.connect(dbUrl)
+mongoose.connect(process.env.dbURL)
 .then(() => {
     console.log("✅ MongoDB connected successfully");
 })
@@ -23,7 +22,6 @@ mongoose.connect(dbUrl)
 
 const flightRoutes = require("./routes/flight");
 const authRoutes = require("./routes/auth");
-const trainRoutes = require("./routes/trains");
 
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
@@ -60,7 +58,6 @@ app.use((req, res, next) => {
 
 // Mount routes
 app.use("/", flightRoutes);
-app.use("/trains", trainRoutes);
 app.use("/", authRoutes);
 
 // 404 page
