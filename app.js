@@ -14,10 +14,14 @@ const User = require("./models/User");
 // MongoDB Connection
 mongoose.connect(process.env.dbURL)
 .then(() => {
-    console.log("✅ MongoDB connected successfully");
+    console.log("MongoDB Connected");
+
+    app.listen(process.env.PORT || 3000, () => {
+        console.log("Server running on port 3000");
+    });
 })
-.catch(err => {
-    console.error("❌ MongoDB connection error:", err);
+.catch((err) => {
+    console.log("MongoDB Error:", err);
 });
 
 const flightRoutes = require("./routes/flight");
